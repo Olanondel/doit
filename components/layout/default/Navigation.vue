@@ -41,6 +41,7 @@ export default {
 .nav {
   height: 106px;
   display: flex;
+  margin-bottom: 5%;
 
   .logotype {
     display: flex;
@@ -76,6 +77,7 @@ export default {
 @media (max-width: 575px) {
   .nav {
     height: 80px;
+    padding-top: 15px;
   }
 }
 </style>

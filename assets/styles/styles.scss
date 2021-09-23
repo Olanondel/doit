@@ -38,6 +38,13 @@ input::-webkit-inner-spin-button {
   margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 
+a {
+  text-decoration: none;
+  font-size: 16px;
+  line-height: 20.8px;
+  color: #37B7FA;
+}
+
 .base-input {
   width: 240px;
   height: 40px;
