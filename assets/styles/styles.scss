@@ -6,25 +6,12 @@ html {
 }
 
 body {
-  margin-left: 120px;
   background: #0F1215;
 
   font-size: 16px;
   font-family: 'Rubik', sans-serif;
   line-height: 16px;
   color: #627CA3;
-}
-
-@media (max-width: 991px) {
-  body {
-    margin-left: 85px;
-  }
-}
-
-@media (max-width: 767px) {
-  body {
-    margin-left: 0;
-  }
 }
 
 input {
@@ -84,4 +71,35 @@ a {
   line-height: 14px;
   color: #fff;
   margin-bottom: 6px;
+}
+
+.content {
+  flex: 1 1 auto;
+}
+
+.auth-title {
+  font-weight: bold;
+  font-size: 32px;
+  margin-bottom: 30px;
+  color: #E6E6E6;
+}
+
+.hidden-on-mobile {
+  @media screen and (max-width: 680px) {
+    display: none !important;
+  }
+}
+
+.section-title {
+  font-weight: 700;
+  font-size: 44px;
+  line-height: 44px;
+  color: #F5F5F5;
+}
+
+.page-title {
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 56px;
+  color: #fff;
 }

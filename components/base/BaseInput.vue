@@ -1,11 +1,11 @@
 <template>
   <div>
     <label>
-      <div class='base-text' v-if='text'>Normal</div>
+      <div class='base-text' v-if='text'>{{text}}</div>
 
       <input
+        v-bind='$attrs'
         class='base-input'
-        type='text'
         :value='value'
         :placeholder='placeholder'
         @input='$emit("input", $event.target.value)'
@@ -22,10 +22,7 @@
 export default {
   name: 'BaseInput',
   props: {
-    value: {
-      type: String,
-      default: ''
-    },
+    value: String,
     placeholder: {
       type: String,
       default: ''
@@ -34,7 +31,8 @@ export default {
       type: String,
       default: ''
     },
-  }
+  },
+  inheritAttrs: false,
 }
 </script>
 

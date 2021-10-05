@@ -1,13 +1,16 @@
 <template>
   <label class="custom-checkbox">
     <input type="checkbox" value="value-1">
-    <span></span>
+    <span>{{text}}</span>
   </label>
 </template>
 
 <script>
 export default {
   name: 'BaseCheckbox',
+  props: {
+    text: String
+  },
   data() {
     return {
       check: true

@@ -12,7 +12,7 @@ export default {
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       {
         rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'
+        href: 'https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap'
       }
     ]
   },
@@ -21,13 +21,13 @@ export default {
   css: [
     '@/assets/styles/reset.css',
     '@/assets/styles/styles.scss',
-    '@/node_modules/vue-select/dist/vue-select.css',
+    '@/node_modules/vue-select/dist/vue-select.css'
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    {src: '@/plugins/vuelidate.js'},
-    {src: '@/plugins/vcalendar.js', ssr: false},
+    { src: '@/plugins/vuelidate.js' },
+    { src: '@/plugins/vcalendar.js', ssr: false }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -36,7 +36,9 @@ export default {
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    [
+      '@nuxtjs/eslint-module', {}
+    ]
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -45,8 +47,34 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+
+    '@nuxtjs/auth-next',
+
+    [
+      '@nuxtjs/firebase',
+      {
+        config: {
+          apiKey: 'AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
+          authDomain: 'spacelab-proj-doit.firebaseapp.com',
+          projectId: 'spacelab-proj-doit',
+          storageBucket: 'spacelab-proj-doit.appspot.com',
+          messagingSenderId: '989453622302',
+          appId: '1:989453622302:web:e681c58ba29bb23f9de20f'
+        },
+        services: {
+          auth: true,
+          storage: true,
+          firestore: true
+        }
+      }
+    ]
   ],
 
+  auth: {
+    strategies: {
+
+    }
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},
@@ -55,6 +83,12 @@ export default {
   pwa: {
     manifest: {
       lang: 'en'
+    }
+  },
+
+  render: {
+    bundleRenderer: {
+      runInNewContext: false
     }
   },
 

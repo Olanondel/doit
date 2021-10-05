@@ -35,7 +35,7 @@ export default {
     height: 334px;
     display: flex;
     justify-content: center;
-    font-family: 'Roboto';
+    font-family: 'Roboto', sans-serif;
 
     .error__text {
       display: flex;
