@@ -40,6 +40,7 @@ export default {
 .vc-popover-content {
   border: 1px solid #16263D !important;
   margin-top: 4px !important;
+  background: #0B1729 !important;
 }
 
 .vc-popover-caret {

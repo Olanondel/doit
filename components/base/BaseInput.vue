@@ -8,7 +8,7 @@
         class='base-input'
         :value='value'
         :placeholder='placeholder'
-        @input='$emit("input", $event.target.value)'
+        @input='$emit("changeValue", $event.target.value)'
       >
 
     </label>

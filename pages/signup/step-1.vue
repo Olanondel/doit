@@ -6,17 +6,20 @@
       <div class='login__form-wrapper'>
         <form class='login__form'>
           <BaseInput
-            v-model='email'
+            @changeValue='changeEmail'
+            :value='email'
             text='Email'
             class='login__input'
           />
           <BaseInput
-            v-model='password'
+            @changeValue='changePassword'
+            :value='password'
             text='Password'
             class='login__input'
             type='password'
           />
-          <BaseButton @click='nextStep' text='Next step' />
+
+          <BaseButton text='next step' @click='nextStep' />
         </form>
 
         <div class='login__with'>
@@ -41,13 +44,16 @@
 
 <script>
 
+import BaseButton from '../../components/base/BaseButton'
 export default {
   name: 'step-1',
-  components: {  },
+  components: { BaseButton  },
+  props: {
+    email: { type: String, default: '' },
+    password: { type: String, default: '' }
+  },
   data() {
     return {
-      email: '',
-      password: '',
       social: [
         { title: 'facebook', icon: '~/assets/img/auth/facebook.svg' },
         { title: 'social', icon: '~/assets/img/auth/social.svg' },
@@ -58,7 +64,13 @@ export default {
   },
   methods: {
     nextStep() {
-      this.router.push('/signup/step-2')
+      this.$router.push('step-2')
+    },
+    changeEmail(email) {
+      this.$emit('changeEmail', email)
+    },
+    changePassword(password) {
+      this.$emit('changePassword', password)
     }
   }
 }

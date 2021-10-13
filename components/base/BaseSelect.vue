@@ -4,6 +4,7 @@
     <vSelect
       :options='options1'
       placeholder='Choose the value'
+
     />
   </div>
 </template>
@@ -51,7 +52,7 @@ export default {
 }
 
 .vs__dropdown-menu {
-  background: transparent;
+  background: #0B1729;
   color: #627CA3;
   padding: 0;
 }

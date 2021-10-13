@@ -22,19 +22,16 @@
             {{ item.text }}
           </nuxt-link>
         </ul>
-
-        <AuthButtons v-if='!isAuth' class='mobile nav__auth' />
       </div>
-
     </div>
   </nav>
 </template>
 
 <script>
-import AuthButtons from '../../auth/AuthButtons'
+
 export default {
   name: 'Navigation',
-  components: { AuthButtons },
+  components: {  },
   data() {
     return {
       nav: [
@@ -51,7 +48,7 @@ export default {
     toggleMenu() {
       this.$refs['nav__burger-icon'].classList.toggle('nav__burger-icon_open')
       this.$refs['nav-group'].classList.toggle('nav__group_open')
-      document.body.style.overflow = (document.body.style.overflow === 'hidden') ? 'visible' : 'hidden'
+      // document.body.style.overflow = (document.body.style.overflow === 'hidden') ? 'visible' : 'hidden'
     }
   }
 }

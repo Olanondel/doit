@@ -21,13 +21,15 @@ export default {
   css: [
     '@/assets/styles/reset.css',
     '@/assets/styles/styles.scss',
-    '@/node_modules/vue-select/dist/vue-select.css'
+    '@/assets/styles/plugins/swiper-bundle.css',
+    '@/node_modules/vue-select/dist/vue-select.css',
   ],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '@/plugins/vuelidate.js' },
-    { src: '@/plugins/vcalendar.js', ssr: false }
+    { src: '@/plugins/vcalendar.js', ssr: false },
+    { src: '@/plugins/vue-awesome-swiper.js', mode: 'client', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -72,12 +74,35 @@ export default {
 
   auth: {
     strategies: {
-
+      local: {
+        endpoints: {
+          login: {
+            url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
+            method: 'post',
+            propertyName: 'data.idToken'
+          },
+          user: {
+            url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
+            method: 'post',
+            propertyName: 'data'
+          },
+          logout: {
+            url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
+            method: 'post',
+          },
+        },
+      }
     }
   },
 
+  router: {
+    middleware: ['auth'], // auth: false for specific component, guest for home redirect
+  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
+  axios: {
+    credentials: true
+  },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
   pwa: {

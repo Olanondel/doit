@@ -1,53 +1,76 @@
 <template>
-  <div class='home-wrapper content'>
-    <section v-if='!isAuth' class="greetings">
+  <div class='content home'>
+    <section v-if='!$auth.loggedIn' class='greetings'>
       <div class='greetings__content'>
         <h1 class='greetings__title'>Doit <span class='hidden-on-mobile'>beta</span></h1>
         <div class='greetings__text'>
           Prepare for your esports career and get ready for awesome tournaments with big prize pools and many fun!
           Register Now!
         </div>
+
         <AuthButtons class='hidden-on-mobile greetings__auth-buttons' />
       </div>
     </section>
+
+    <TournamentsSlider class='home__slider' />
+
+    <NewsSlider class='home__slider' />
+
   </div>
 </template>
 <script>
 import AuthButtons from '../components/auth/AuthButtons'
+import TournamentsSlider from '../components/home/TournamentsSlider'
+import NewsSlider from '../components/home/NewsSlider'
+
 export default {
-  components: { AuthButtons },
+  components: { NewsSlider, TournamentsSlider, AuthButtons },
   data() {
     return {
-      isAuth: false
+
     }
   },
-  methods: {
-
-  },
+  methods: {}
 }
 </script>
 <style lang='scss' scoped>
-.home-wrapper {
+.home {
   flex: 1 1 auto;
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
+
+  &__slider {
+    margin-bottom: 160px;
+  }
 }
 
 .greetings {
+  margin-bottom: 20px;
   width: 100%;
-  flex: 1 0 auto;
+  max-height: 760px;
+  padding: 14% 0 40%;
   align-items: center;
   display: flex;
   flex-direction: column;
-  background: transparent url('@/assets/img/bg/on-main-top.png') no-repeat top/cover;
+  justify-content: center;
+  background: transparent url('@/assets/img/bg/on-main-top.png') no-repeat top/contain;
 
   @media (max-width: 991px) {
+
+  }
+
+  @media (max-width: 680px) {
+    background-position: center;
+
+  }
+
+  @media (max-width: 480px) {
+    background-position: center;
   }
 
   &__content {
-    margin-top: 12%;
     max-width: 650px;
     text-align: center;
     display: flex;
@@ -56,11 +79,11 @@ export default {
     align-items: center;
 
     @media (max-width: 991px) {
-      margin-top: 8%;
+      //margin-top: 8%;
     }
 
     @media (max-width: 680px) {
-      margin-top: 16%;
+      //margin-top: 16%;
     }
   }
 
@@ -74,10 +97,13 @@ export default {
 
     @media (max-width: 991px) {
       font-size: 96px;
+      line-height: 96px;
     }
 
     @media (max-width: 680px) {
       font-size: 84px;
+      line-height: 84px;
+      margin-bottom: 8px;
     }
   }
 
@@ -88,6 +114,11 @@ export default {
     line-height: 24px;
     color: #CCCCCC;
     margin-bottom: 26px;
+
+    @media (max-width: 680px) {
+      font-size: 14px;
+      line-height: 21px;
+    }
   }
 
   &__auth-buttons {

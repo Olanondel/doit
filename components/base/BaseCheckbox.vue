@@ -32,6 +32,9 @@ export default {
   display: inline-flex;
   align-items: center;
   user-select: none;
+  font-size: 12px;
+  line-height: 16px;
+  color: #627CA3;
 }
 
 /* создание в label псевдоэлемента before со следующими стилями */
@@ -47,6 +50,7 @@ export default {
   background-position: center;
   width: 24px;
   height: 24px;
+  margin-right: 11px;
 }
 
 /* стили при наведении курсора на checkbox */

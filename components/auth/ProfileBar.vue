@@ -37,12 +37,9 @@
           </div>
 
           <div class='profile-bar__support-nav'>
-            <nuxt-link
-              v-for='link in helpNav'
-              :key='link.title'
-              to='to'
-            >{{ link.title }}
-            </nuxt-link>
+            <nuxt-link to='to'>Support</nuxt-link>
+            <nuxt-link to='to'>Settings</nuxt-link>
+            <nuxt-link to='' @click.native='logout'>Logout</nuxt-link>
           </div>
         </div>
       </div>
@@ -74,6 +71,9 @@ export default {
   methods: {
     openBar() {
       this.$refs['profile-bar'].classList.toggle('profile-bar_open')
+    },
+    async logout() {
+      await this.$auth.logout()
     }
   }
 }
@@ -175,6 +175,7 @@ export default {
     visibility: hidden;
     opacity: 0;
     transition: .2s visibility linear, .2s opacity linear;
+    z-index: 9999;
 
     a {
       color: #F5F5F5;

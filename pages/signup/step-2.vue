@@ -6,7 +6,8 @@
       <div class='login__form-wrapper'>
         <form class='login__form'>
           <BaseInput
-            v-model='username'
+            :value='username'
+            @changeValue='changeUsername'
             text='Username'
             class='login__input'
           />
@@ -37,7 +38,29 @@ import BaseCheckbox from '../../components/base/BaseCheckbox'
 
 export default {
   name: 'Step-2',
-  components: { BaseCheckbox, BaseDatePicker, BaseSelect }
+  components: { BaseCheckbox, BaseDatePicker, BaseSelect },
+  props: {
+    username: { type: String, default: '' },
+    country: { type: String, default: '' }
+  },
+  computed: {
+    country1: {
+      get() {
+        return this.country
+      },
+      set(country) {
+        this.$emit('changeCountry', country)
+      }
+    }
+  },
+  methods: {
+    changeUsername(username) {
+      this.$emit('changeUsername', username)
+    },
+    register() {
+      this.$emit('register')
+    }
+  }
 }
 </script>
 

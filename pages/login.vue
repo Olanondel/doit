@@ -18,7 +18,7 @@
               class='login__input'
               type='password'
             />
-            <BaseButton @click='login' text='Login' />
+            <BaseButton text='Login' @click='login' />
           </form>
 
           <div class='login__with'>
@@ -55,8 +55,8 @@ export default {
   layout: 'auth',
   data() {
     return {
-      email: '',
-      password: '',
+      email: 'prbaoleg@gmail.com',
+      password: 'zfvnmmn',
       social: [
         { title: 'facebook', icon: '~/assets/img/auth/facebook.svg' },
         { title: 'social', icon: '~/assets/img/auth/social.svg' },
@@ -68,9 +68,7 @@ export default {
   methods: {
     async login() {
       try {
-        const user = await this.$fire.auth.signInWithEmailAndPassword(this.email, this.password)
-
-        console.log(user)
+        await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
       } catch (err) {
         console.log(err)
       }
