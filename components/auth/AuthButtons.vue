@@ -1,5 +1,5 @@
 <template>
-  <div class='auth-buttons'>
+  <div class='auth-buttons hidden-on-mobile'>
     <nuxt-link class='auth-buttons__login auth-btn' to='login'>Login</nuxt-link>
     <nuxt-link class='auth-buttons__signup auth-btn' to='signup/step-1'>Sign up</nuxt-link>
   </div>

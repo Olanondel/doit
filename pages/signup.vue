@@ -46,7 +46,7 @@ export default {
         uid: 'auth.user.uid',
       })
 
-      console.log('success')
+      await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
     },
     changeEmail(email) {
       this.email = email

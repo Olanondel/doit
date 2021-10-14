@@ -88,6 +88,10 @@ export default {
       height: 48px;
       flex: 0 0 56px;
       margin-right: 0;
+
+      // optional
+      position: relative;
+      z-index: 9999;
     }
   }
 
@@ -103,6 +107,8 @@ export default {
       height: 16px;
       display: none;
       background: transparent url('@/assets/img/icons/navigation/burger.svg') no-repeat center;
+      position: relative;
+      z-index: 9999;
 
       &_open {
         background: transparent url('@/assets/img/icons/navigation/burger-open.svg') no-repeat bottom;

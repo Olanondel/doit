@@ -1,5 +1,5 @@
 <template>
-  <div class='profile-side'>
+  <div class='profile-side hidden-on-mobile'>
 
     <div ref='profile-bar' class='profile-bar'>
       <div class='profile-bar__info'>

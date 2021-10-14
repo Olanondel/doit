@@ -38,11 +38,20 @@ export default {
 <style lang='scss' scoped>
 .main-layout {
   min-height: 100vh;
+  padding-left: 113px;
+
+  @media (max-width: 991px) {
+    padding-left: 80px;
+  }
+
+  @media (max-width: 767px) {
+    padding-left: 0;
+  }
 }
 
 .content-wrapper {
   max-width: 1100px;
-  padding: 0 15px 0 128px; // 128
+  padding: 0 15px 0 15px; // 128
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -50,7 +59,7 @@ export default {
   min-height: 100vh;
 
   @media (max-width: 991px) {
-    padding: 0 15px 0 95px; // 95
+    padding: 0 15px 0 15px; // 95
   }
 
   @media (max-width: 767px) {

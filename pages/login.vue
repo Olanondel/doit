@@ -61,14 +61,16 @@ export default {
         { title: 'facebook', icon: '~/assets/img/auth/facebook.svg' },
         { title: 'social', icon: '~/assets/img/auth/social.svg' },
         { title: 'google', icon: '~/assets/img/auth/google.svg' },
-        { title: 'steam', icon: '~/assets/img/auth/steam.svg' },
+        { title: 'steam', icon: '~/assets/img/auth/steam.svg' }
       ]
     }
   },
   methods: {
     async login() {
       try {
-        await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
+        const data = await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
+
+        this.$auth.setUser(data.data)
       } catch (err) {
         console.log(err)
       }
@@ -78,6 +80,7 @@ export default {
 </script>
 
 <style lang='scss'>
+
 .login-page {
   max-width: 240px;
   max-height: 572px;

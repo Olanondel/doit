@@ -75,16 +75,22 @@ export default {
   auth: {
     strategies: {
       local: {
+        token: {
+          property: 'idToken',
+          global: true,
+          required: true,
+        },
+        user: {
+          property: 'users'
+        },
         endpoints: {
           login: {
             url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
             method: 'post',
-            propertyName: 'data.idToken'
           },
           user: {
-            url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
+            url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
             method: 'post',
-            propertyName: 'data'
           },
           logout: {
             url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
@@ -95,13 +101,13 @@ export default {
     }
   },
 
-  router: {
-    middleware: ['auth'], // auth: false for specific component, guest for home redirect
-  },
+  // router: {
+  //   middleware: ['auth'], // auth: false for specific component, guest for home redirect
+  // },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    credentials: true
+    credentials: true,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
