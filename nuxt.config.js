@@ -95,9 +95,9 @@ export default {
     }
   },
 
-  // router: {
-  //   middleware: ['auth'], // auth: false for specific component, guest for home redirect
-  // },
+  router: {
+    middleware: ['auth'] // auth: false for specific component, guest for home redirect
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
