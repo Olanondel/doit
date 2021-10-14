@@ -47,7 +47,7 @@ export default {
 }
 
 .greetings {
-  margin-bottom: 20px;
+  margin-bottom: 130px;
   width: 100%;
   max-height: 760px;
   padding: 14% 0 40%;

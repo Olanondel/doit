@@ -68,9 +68,10 @@ export default {
   methods: {
     async login() {
       try {
-        const data = await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
+        const authData = await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
+        const user = authData.data
 
-        this.$auth.setUser(data.data)
+        this.$auth.$storage.setUniversal('user', user, true)
       } catch (err) {
         console.log(err)
       }
