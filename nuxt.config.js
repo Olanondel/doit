@@ -30,7 +30,7 @@ export default {
     { src: '@/plugins/vuelidate.js' },
     { src: '@/plugins/vcalendar.js', ssr: false },
     { src: '@/plugins/vue-awesome-swiper.js', mode: 'client', ssr: false },
-    { src: '@/plugins/api.js' }
+    { src: '@/plugins/api.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -79,20 +79,27 @@ export default {
     strategies: {
       local: {
         token: {
-          property: 'idToken',
-          global: true,
-          required: true
+          property: "idToken",
+          name: 'idToken',
+          prefix: '',
+          expirationPrefix: '',
+          type: ''
         },
         endpoints: {
           login: {
             url: 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
-            method: 'post'
+            method: 'post',
+            propertyName: "idToken"
           },
-          user: false,
+          user: {
+            url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
+            method: 'post',
+            data: { idToken: 'eyJhbGciOiJSUzI1NiIsImtpZCI6InRCME0yQSJ9.eyJpc3MiOiJodHRwczovL2lkZW50aXR5dG9vbGtpdC5nb29nbGUuY29tLyIsImF1ZCI6InNwYWNlbGFiLXByb2otZG9pdCIsImlhdCI6MTYzNTI4MjM0MywiZXhwIjoxNjM2NDkxOTQzLCJ1c2VyX2lkIjoiM1lrSGNERmNRek5qNGowTktIMzVMSWNiSU1PMiIsImVtYWlsIjoicHJiYW9sZWdAZ21haWwuY29tIiwic2lnbl9pbl9wcm92aWRlciI6InBhc3N3b3JkIiwidmVyaWZpZWQiOmZhbHNlfQ.secI_Tdo24liQYJWCesRLplpfvwyTNjo1Pyts3hX7-ZG7zNPxu-imaSI-7_uaTM7WLLeueh3umg_NmQQOQWcLMaR8-PoC9NHTxTzSwvYW4260gOz7mBAWdeq89_3yZPfzKXUN1pbuUj3vs8eagq36YWjWz2xgDSpv3_Z8fJY04cYelfC-sRIfvcAkpXzupwsnnrOEkR5AKgcAAUq9o4HxtjkTiJz8rkyzm_yQRKoCoLJOkWOtifWlFYl6AyHuxPYjta5psP7Vofijt3wS-OMYqJ4BkXXKEonm3CSGwt0LAlxbuXk-2gF_CsNyXLjo8woxwLu0eS3LN43ykweotJDFg' }
+          },
           logout: {
             url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
-            method: 'post'
-          }
+            method: 'post',
+          },
         }
       },
     }
@@ -104,7 +111,7 @@ export default {
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    credentials: true
+    credentials: true,
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

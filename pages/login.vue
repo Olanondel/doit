@@ -24,7 +24,7 @@
           <div class='login__with'>
             <div class='login__social-text'>or login with</div>
             <ul class='login__social-list'>
-              <li @click='fbLogin' class='login__social-item facebook'></li>
+              <li class='login__social-item facebook' @click='fbLogin'></li>
               <li class='login__social-item social'></li>
               <li class='login__social-item google'></li>
               <li class='login__social-item steam'></li>
@@ -66,12 +66,9 @@ export default {
   methods: {
     async login() {
       try {
-        const authData = await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
-        const user = authData.data
-
-        this.$auth.$storage.setUniversal('user', user, true)
+        await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
       } catch (err) {
-        console.log(err)
+        alert(err)
       }
     },
 

@@ -1,5 +1,5 @@
 <template>
-  <div class='radio' :style="{ marginBottom: mb + 'px' }">
+  <div class='radio'>
     <div class='radio__title'> {{ title }} </div>
 
     <div class='radio__content'>
@@ -7,6 +7,7 @@
         v-for='radio in options'
         :key='radio.value'
         class='radio__item'
+        :class="{ radio__item_active: radio.value === checked }"
       >
         <input :value='radio.value' :name='name' type='radio' :checked='radio.value === checked' @change="$emit('change', $event.target.value)" />
         {{ radio.text }}
@@ -35,6 +36,8 @@ export default {
 
 <style lang='scss' scoped>
 .radio {
+  margin-bottom: 22px;
+
   &__title {
     margin-bottom: 12px;
     font-size: 16px;
@@ -48,7 +51,6 @@ export default {
     flex-direction: column;
 
     label {
-      margin-bottom: 8px;
       color: #CCCDCD;
       cursor: pointer;
     }
@@ -56,11 +58,36 @@ export default {
 
   &__item {
     color: #CCCDCD;
+    position: relative;
+    margin-bottom: 12px;
+    padding-left: 28px;
+    white-space: nowrap;
+
+    &_active {
+      &:before {
+        background: #0F1215 url("@/assets/img/icons/admin/base/radio-active.svg") no-repeat center;
+      }
+    }
+
+    &:before {
+      display: inline-block;
+      content: "";
+      width: 20px;
+      height: 20px;
+      border: 2px solid #20252B;
+      border-radius: 50%;
+      position: absolute;
+      left: 0;
+      top: -2px;
+    }
+
+
   }
 
   &__item input {
     padding: 0;
     margin: 0;
+    display: none;
   }
 }
 </style>

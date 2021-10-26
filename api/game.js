@@ -20,8 +20,10 @@ export default fb => ({
     return [data, lastVisible]
   },
 
-  getGame(id) {
+  async getGame(id) {
+    const res = await fb.firestore.collection('games').doc(id).get()
 
+    return res.data()
   }
 
   // end

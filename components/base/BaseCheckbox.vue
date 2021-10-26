@@ -1,8 +1,8 @@
 <template>
-  <div class='base-checkbox'>
-    <label class="custom-checkbox">
-      <input :checked='checked' type="checkbox" @change="$emit('change', $event.target.checked)">
-      <span :class="{ 'base-checkbox__admin': onAdmin }">{{text}}</span>
+  <div class='base-checkbox' :class="{ 'on-admin': onAdmin }">
+    <label class='custom-checkbox'>
+      <input :checked='checked' type='checkbox' @change="$emit('change', $event.target.checked)">
+      <span :class="{ 'base-checkbox__admin': onAdmin }">{{ text }}</span>
     </label>
   </div>
 </template>
@@ -28,6 +28,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.on-admin {
+  margin-bottom: 22px;
+}
+
 .base-checkbox, .base-checkbox > label {
   cursor: pointer;
 }
@@ -39,14 +43,14 @@ export default {
 }
 
 /* для элемента input c type="checkbox" */
-.custom-checkbox>input {
+.custom-checkbox > input {
   position: absolute;
   z-index: -1;
   opacity: 0;
 }
 
 /* для элемента label, связанного с .custom-checkbox */
-.custom-checkbox>span {
+.custom-checkbox > span {
   display: inline-flex;
   align-items: center;
   user-select: none;
@@ -56,7 +60,7 @@ export default {
 }
 
 /* создание в label псевдоэлемента before со следующими стилями */
-.custom-checkbox>span::before {
+.custom-checkbox > span::before {
   content: '';
   cursor: pointer;
   display: inline-block;
@@ -72,7 +76,7 @@ export default {
 }
 
 /* стили при наведении курсора на checkbox */
-.custom-checkbox>input:not(:disabled):not(:checked)+span:hover::before {
+.custom-checkbox > input:not(:disabled):not(:checked) + span:hover::before {
   background: #0F1929;
   border: 1px solid #294470;
 }
@@ -94,29 +98,56 @@ export default {
 //}
 
 /* стили для чекбокса, находящегося в состоянии checked */
-.custom-checkbox>input:checked+span::before {
+.custom-checkbox > input:checked + span::before {
   background: transparent url('../../assets/img/icons/checkbox/normal.svg') center;
   background-size: contain;
   border: 0;
 }
 
-.custom-checkbox>input:checked:hover+span::before {
+.custom-checkbox > input:checked:hover + span::before {
   background: transparent url('../../assets/img/icons/checkbox/hover.svg') center;
   background-size: contain;
   border: 0;
 }
 
 /* стили для чекбокса, находящегося в состоянии disabled */
-.custom-checkbox>input:disabled+span::before {
+.custom-checkbox > input:disabled + span::before {
   background-color: #121519;
   border: 1px solid #1D2129;
 }
 
-.custom-checkbox>input:checked:disabled+span::before {
+.custom-checkbox > input:checked:disabled + span::before {
   background: transparent url('../../assets/img/icons/checkbox/disable.svg') center;
   background-size: contain;
   border: 0;
 }
 
+.on-admin {
+  .custom-checkbox > span::before {
+    content: '';
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 0;
+    flex-grow: 0;
+    border: 2px solid #20252B;
+    background-color: #0F1215;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    margin-right: 11px;
+  }
+
+  .custom-checkbox > input:not(:disabled):not(:checked) + span:hover::before {
+    background: #0F1215;
+    border: 2px solid #20252B;
+  }
+
+  .custom-checkbox > input:checked + span::before {
+    background: transparent url('../../assets/img/icons/admin/base/checkbox-active.png') no-repeat center;
+    border: 2px solid #20252B;
+  }
+}
 
 </style>

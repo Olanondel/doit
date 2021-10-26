@@ -1,8 +1,6 @@
 <template>
-  <div class='upload-image' :style="{ marginBottom: mb + 'px' }">
+  <div class='upload-image'>
     <div class='upload-image__title'> {{ title }} </div>
-
-
 
       <label class='upload-image__content'>
         <input ref='imageFile' class='upload-image__file' placeholder='image url' type='file' @change='getImage'>
@@ -20,7 +18,6 @@ export default {
   props: {
     title: { type: String, default: '' },
     file: { type: String, default: 'FILE' },
-    mb: { type: String, default: '0' }
   },
   methods: {
     getImage() {
@@ -39,6 +36,8 @@ export default {
 
 <style lang='scss' scoped>
 .upload-image {
+  margin-bottom: 22px;
+
   &__title {
     margin-bottom: 12px;
   }

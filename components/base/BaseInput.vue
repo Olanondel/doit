@@ -1,5 +1,5 @@
 <template>
-  <div :style="{ marginBottom: mb + 'px' }">
+  <div class='container' :class="{ 'on-admin': onAdmin }">
     <div v-if='title' class='base-text'>{{ title }}</div>
 
     <div
@@ -43,7 +43,6 @@ export default {
     title: { type: String, default: '' },
     url: { type: String, default: '' },
     onAdmin: { type: Boolean, default: false },
-    mb: { type: String, default: '0' },
     maxLength: { type: Number, default: 16 },
     minLength: { type: Number, default: 4 },
     required: { type: Boolean, default: false },
@@ -140,6 +139,16 @@ export default {
 }
 
 .on-admin {
+  &.container {
+    margin-bottom: 22px;
+  }
+
+  .base-text {
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #CCCDCD;
+  }
+
   &.base-input-wrapper {
     display: flex;
     align-items: center;

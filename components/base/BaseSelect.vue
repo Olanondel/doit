@@ -1,5 +1,5 @@
 <template>
-  <div class='base-select-wrapper' :class='{ onAdmin: onAdmin }' :style='{ marginBottom: mb + "px" }'>
+  <div class='base-select-wrapper' :class='{ onAdmin: onAdmin }'>
     <div class='base-text'>{{ title }}</div>
     <vSelect
       v-model='selected'
@@ -28,7 +28,6 @@ export default {
     title: { type: String, default: '' },
     current: { type: String, default: '' },
     onAdmin: { type: Boolean, default: false },
-    mb: { type: String, default: '0' }
   },
   data() {
     return {}
@@ -50,6 +49,10 @@ export default {
 <style lang='scss'>
 .base-select-wrapper {
   width: 100%;
+}
+
+.base-select-wrapper.onAdmin {
+  margin-bottom: 22px;
 }
 
 .vs__dropdown-toggle,

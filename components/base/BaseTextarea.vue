@@ -1,5 +1,5 @@
 <template>
-  <div :class='{ onAdmin: onAdmin }' :style="{ marginBottom: mb + 'px' }">
+  <div :class='{ "on-admin": onAdmin }' :style="{ marginBottom: mb + 'px' }">
     <label>
       <div class='base-text' v-if='title'>{{title}}</div>
 
@@ -102,6 +102,12 @@ export default {
 }
 
 .on-admin {
+  .base-text {
+    margin-bottom: 12px;
+    font-weight: 700;
+    color: #CCCDCD;
+  }
+
   &.base-input-wrapper {
     display: flex;
     align-items: center;
@@ -121,6 +127,10 @@ export default {
     border: 1px solid #20252B;
     background: #0F1215;
     color: #CCCDCD;
+
+    &::placeholder {
+      color: #20252B;
+    }
   }
 
 
