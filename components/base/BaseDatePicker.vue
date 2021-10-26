@@ -1,7 +1,13 @@
 <template>
   <div class='datepicker-wrapper'>
-    <div class='base-text'>Date</div>
-    <v-date-picker v-model='date' is-dark>
+    <div class='base-text'>{{title}}</div>
+    <v-date-picker
+      v-model='pickedDate'
+      :mode='mode'
+      is-dark
+      is24hr
+      :model-config='config'
+    >
       <template v-slot='{ inputValue, inputEvents }'>
         <input
           class='bg-dark border px-2 py-1 rounded base-input calendar-icon'
@@ -17,9 +23,29 @@
 
 export default {
   name: 'BaseDatePicker',
+  model: {
+    prop: 'date',
+    event: 'change'
+  },
+  props: {
+   title: { type: String, default: '' },
+    date: { type: String, default: '1995-12-30' },
+    mode: { type: String, default: '' },
+    config: { type: Object, default: () => ({ type: 'string', mask: 'YYYY-MM-DD', }) }
+  },
   data() {
     return {
-      date: new Date()
+    }
+  },
+  computed: {
+    pickedDate: {
+      get() {
+        return this.date
+      },
+
+      set(value) {
+        this.$emit('change', value)
+      }
     }
   }
 }

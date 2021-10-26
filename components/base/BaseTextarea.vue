@@ -1,28 +1,17 @@
 <template>
-  <div :style="{ marginBottom: mb + 'px' }">
-    <div v-if='title' class='base-text'>{{ title }}</div>
+  <div :class='{ onAdmin: onAdmin }' :style="{ marginBottom: mb + 'px' }">
+    <label>
+      <div class='base-text' v-if='title'>{{title}}</div>
 
-    <div
-      class='base-input-wrapper'
-      :class="{
-        'on-admin': onAdmin,
-        'error': ( $v.current.$dirty && $v.current.$invalid ),
-        'success': ($v.current.$dirty && !$v.current.$invalid)
-      }"
-    >
-      <div v-if='url' class='base-url'>
-        {{ url }}
-      </div>
+      <textarea
+        v-bind='$attrs'
+        class='base-input'
+        :value='value'
+        :placeholder='placeholder'
+        @input='$emit("input", $event.target.value)'
+      ></textarea>
 
-      <label>
-        <input
-          v-model='current'
-          v-bind='$attrs'
-          class='base-input'
-          :placeholder='placeholder'
-        >
-      </label>
-    </div>
+    </label>
 
     <div v-if='false' class='error-message'>invalid type of data</div>
 
@@ -30,53 +19,26 @@
 </template>
 
 <script>
-
-
-import { email, maxLength, minLength, required } from 'vuelidate/lib/validators'
-
 export default {
-  name: 'BaseInput',
+  name: 'BaseTextarea',
   inheritAttrs: false,
   props: {
     value: { type: String, default: '' },
     placeholder: { type: String, default: '' },
     title: { type: String, default: '' },
-    url: { type: String, default: '' },
     onAdmin: { type: Boolean, default: false },
-    mb: { type: String, default: '0' },
-    maxLength: { type: Number, default: 16 },
-    minLength: { type: Number, default: 4 },
-    required: { type: Boolean, default: false },
-    email: { type: Boolean, default: false },
+    mb: { type: String, default: '' }
   },
-  validations() {
-    return this.validators
-  },
-  computed: {
-    current: {
-      get() {
-        return this.value
-      },
 
-      set(v) {
-        this.$emit('input', v)
-      }
-    },
-    validators() {
-      const current = {}
-
-      if (this.required) { current.required = required }
-      if (this.email) { current.email = email }
-      if (this.minLength) { current.minLength = minLength }
-      if (this.maxLength) { current.maxLength = maxLength }
-
-      return { current }
-    }
-  }
 }
 </script>
 
 <style lang='scss' scoped>
+.base-input {
+  min-height: 184px;
+  width: 100%;
+  resize: none;
+}
 
 .base-text {
   color: #fff;
@@ -160,6 +122,7 @@ export default {
     background: #0F1215;
     color: #CCCDCD;
   }
+
 
 
   &.success {

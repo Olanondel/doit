@@ -33,47 +33,6 @@ a {
   color: #37B7FA;
 }
 
-.base-input {
-  width: 240px;
-  height: 40px;
-  padding: 12px 16px;
-  outline: none;
-  background: transparent;
-  border: 1px solid #16263D;
-  border-radius: 2px;
-  color: #627CA3;
-
-  &:focus {
-    background-color: #121F33;
-    border: 1px solid #627CA3;
-    color: #627CA3;
-  }
-
-  &:active {
-    background-color: #16263D;
-    border: 1px solid #185EC7;
-    color: #E6E6E6;
-  }
-
-  &:disabled {
-    background-color: #121F33;
-    border: none;
-    color: #98A4B5;
-    cursor: not-allowed;
-  }
-
-  &::placeholder {
-    color: #627CA3;
-  }
-}
-
-.base-text {
-  font-size: 14px;
-  line-height: 14px;
-  color: #fff;
-  margin-bottom: 6px;
-}
-
 .content {
   flex: 1 1 auto;
 }
@@ -113,4 +72,43 @@ a {
   font-size: 48px;
   line-height: 56px;
   color: #fff;
+}
+
+// Slider Card Styles
+.swiper-slide {
+  height: auto !important;
+}
+
+// admin
+.admin-create-wrapper {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 600px;
+}
+
+.admin-create {
+  max-width: 600px;
+  width: 100%;
+
+  &__timezone {
+    color: #3C434D;
+  }
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+.mb22 {
+  margin-bottom: 22px;
+}
+
+.flex-center {
+  display: flex;
+  justify-content: center;
 }

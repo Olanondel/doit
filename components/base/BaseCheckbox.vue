@@ -1,15 +1,23 @@
 <template>
-  <label class="custom-checkbox">
-    <input type="checkbox" value="value-1">
-    <span>{{text}}</span>
-  </label>
+  <div class='base-checkbox'>
+    <label class="custom-checkbox">
+      <input :checked='checked' type="checkbox" @change="$emit('change', $event.target.checked)">
+      <span :class="{ 'base-checkbox__admin': onAdmin }">{{text}}</span>
+    </label>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'BaseCheckbox',
+  model: {
+    prop: 'checked',
+    event: 'change'
+  },
   props: {
-    text: String
+    text: { type: String, default: '' },
+    checked: { type: Boolean, default: false },
+    onAdmin: { type: Boolean, default: false }
   },
   data() {
     return {
@@ -20,6 +28,16 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.base-checkbox, .base-checkbox > label {
+  cursor: pointer;
+}
+
+.base-checkbox .base-checkbox__admin {
+  color: #CCCDCD;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 /* для элемента input c type="checkbox" */
 .custom-checkbox>input {
   position: absolute;

@@ -29,7 +29,8 @@ export default {
   plugins: [
     { src: '@/plugins/vuelidate.js' },
     { src: '@/plugins/vcalendar.js', ssr: false },
-    { src: '@/plugins/vue-awesome-swiper.js', mode: 'client', ssr: false }
+    { src: '@/plugins/vue-awesome-swiper.js', mode: 'client', ssr: false },
+    { src: '@/plugins/api.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -52,6 +53,7 @@ export default {
 
     '@nuxtjs/auth-next',
 
+    // nuxt firebase
     [
       '@nuxtjs/firebase',
       {
@@ -72,6 +74,7 @@ export default {
     ]
   ],
 
+  // nuxt auth
   auth: {
     strategies: {
       local: {
@@ -91,7 +94,7 @@ export default {
             method: 'post'
           }
         }
-      }
+      },
     }
   },
 

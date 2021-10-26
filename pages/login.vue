@@ -9,12 +9,12 @@
           <form class='login__form'>
             <BaseInput
               v-model='email'
-              text='Username or Email'
+              title='Username or Email'
               class='login__input'
             />
             <BaseInput
               v-model='password'
-              text='Password'
+              title='Password'
               class='login__input'
               type='password'
             />
@@ -24,12 +24,10 @@
           <div class='login__with'>
             <div class='login__social-text'>or login with</div>
             <ul class='login__social-list'>
-              <li
-                v-for='(item, index) in social'
-                :key='index'
-                class='login__social-item'
-                :class='item.title'
-              ></li>
+              <li @click='fbLogin' class='login__social-item facebook'></li>
+              <li class='login__social-item social'></li>
+              <li class='login__social-item google'></li>
+              <li class='login__social-item steam'></li>
             </ul>
           </div>
         </div>
@@ -75,6 +73,11 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+
+    async fbLogin() {
+
+      await this.$api.auth.facebook()
     }
   }
 }
@@ -105,5 +108,9 @@ export default {
   &__fg-password {
     margin-bottom: 12px;
   }
+}
+
+.login__input {
+  margin-bottom: 22px !important;
 }
 </style>

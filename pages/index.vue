@@ -1,33 +1,149 @@
 <template>
   <div class='content home'>
-    <section v-if='!$auth.loggedIn' class='greetings'>
-      <div class='greetings__content'>
-        <h1 class='greetings__title'>Doit <span class='hidden-on-mobile'>beta</span></h1>
-        <div class='greetings__text'>
-          Prepare for your esports career and get ready for awesome tournaments with big prize pools and many fun!
-          Register Now!
-        </div>
 
-        <AuthButtons class='hidden-on-mobile greetings__auth-buttons' />
-      </div>
-    </section>
+    <Greetings />
 
-    <TournamentsSlider class='home__slider' />
+    <WrapperWithFilter title='Tournaments' :categories='categories'>
+      <Slider :slides='tournaments' />
+    </WrapperWithFilter>
 
-    <NewsSlider class='home__slider' />
+    <WrapperWithFilter title='News' :categories='categories'>
+      <Slider :slides='news' component='NewsCard' />
+    </WrapperWithFilter>
+
+    <WrapperWithFilter title='Games' :filter='false' :categories='categories'>
+      <Slider :slides='games' component='GameCard' />
+    </WrapperWithFilter>
 
   </div>
 </template>
 <script>
-import AuthButtons from '../components/auth/AuthButtons'
-import TournamentsSlider from '../components/home/TournamentsSlider'
-import NewsSlider from '../components/home/NewsSlider'
+import Greetings from '../components/sections/Greetings'
+import WrapperWithFilter from '../components/slider/WrapperWithFilter'
+import Slider from '../components/slider/Slider'
 
 export default {
-  components: { NewsSlider, TournamentsSlider, AuthButtons },
+  components: { Slider, WrapperWithFilter, Greetings },
   data() {
     return {
-
+      categories: ['All', 'StarCraft II', 'Dota II', 'CS:GO', 'LOL', 'Fortnite'],
+      tournaments: [
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/tournaments/dota1.jpg'),
+          title: 'Tournament’s name will be here, maybe, in two lines',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/tournaments/dota2.jpg'),
+          title: 'Fortnitity evolution X',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'CS:GO',
+          image: require('@/assets/img/home/tournaments/csgo.jpg'),
+          title: 'CS:GO Mirageby tournament',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/tournaments/dota1.jpg'),
+          title: 'Tournament’s name will be here, maybe, in two lines',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/tournaments/dota2.jpg'),
+          title: 'Fortnitity evolution X',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'CS:GO',
+          image: require('@/assets/img/home/tournaments/csgo.jpg'),
+          title: 'CS:GO Mirageby tournament',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/tournaments/dota1.jpg'),
+          title: 'Tournament’s name will be here, maybe, in two lines',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/tournaments/dota2.jpg'),
+          title: 'Fortnitity evolution X',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        },
+        {
+          game: 'CS:GO',
+          image: require('@/assets/img/home/tournaments/csgo.jpg'),
+          title: 'CS:GO Mirageby tournament',
+          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
+        }
+      ],
+      news: [
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/news/news1.jpg'),
+          title: 'Tournament’s name will be here, maybe, in two lines',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/news/news2.jpg'),
+          title: 'Fortnitity evolution X',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'CS:GO',
+          image: require('@/assets/img/home/news/news3.jpg'),
+          title: 'CS:GO Mirageby tournament',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/news/news1.jpg'),
+          title: 'Tournament’s name will be here, maybe, in two lines',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/news/news2.jpg'),
+          title: 'Fortnitity evolution X',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'CS:GO',
+          image: require('@/assets/img/home/news/news3.jpg'),
+          title: 'CS:GO Mirageby tournament',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/news/news1.jpg'),
+          title: 'Tournament’s name will be here, maybe, in two lines',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'Dota II',
+          image: require('@/assets/img/home/news/news2.jpg'),
+          title: 'Fortnitity evolution X',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        },
+        {
+          game: 'CS:GO',
+          image: require('@/assets/img/home/news/news3.jpg'),
+          title: 'CS:GO Mirageby tournament',
+          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
+        }
+      ],
+      games: [
+        { image: require('@/assets/img/home/games/dota1.jpg'), text: 'Dota ||' },
+        { image: require('@/assets/img/home/games/csgo.jpg'), text: 'CS:GO' },
+        { image: require('@/assets/img/home/games/starcraft.jpg'), text: 'StarCraft ||' },
+      ]
     }
   },
   methods: {}
@@ -46,83 +162,5 @@ export default {
   }
 }
 
-.greetings {
-  margin-bottom: 130px;
-  width: 100%;
-  max-height: 760px;
-  padding: 14% 0 40%;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  background: transparent url('@/assets/img/bg/on-main-top.png') no-repeat top/contain;
 
-  @media (max-width: 991px) {
-
-  }
-
-  @media (max-width: 680px) {
-    background-position: center;
-
-  }
-
-  @media (max-width: 480px) {
-    background-position: center;
-  }
-
-  &__content {
-    max-width: 650px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    @media (max-width: 991px) {
-      //margin-top: 8%;
-    }
-
-    @media (max-width: 680px) {
-      //margin-top: 16%;
-    }
-  }
-
-  &__title {
-    font-weight: 700;
-    font-size: 125px;
-    line-height: 125px;
-    color: #F5F5F5;
-    text-transform: uppercase;
-    margin-bottom: 17px;
-
-    @media (max-width: 991px) {
-      font-size: 96px;
-      line-height: 96px;
-    }
-
-    @media (max-width: 680px) {
-      font-size: 84px;
-      line-height: 84px;
-      margin-bottom: 8px;
-    }
-  }
-
-  &__text {
-    max-width: 463px;
-    text-align: center;
-    font-size: 16px;
-    line-height: 24px;
-    color: #CCCCCC;
-    margin-bottom: 26px;
-
-    @media (max-width: 680px) {
-      font-size: 14px;
-      line-height: 21px;
-    }
-  }
-
-  &__auth-buttons {
-    flex: 1 1 auto;
-  }
-}
 </style>
