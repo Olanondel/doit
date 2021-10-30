@@ -1,8 +1,11 @@
 <template>
-  <div class='base-checkbox' :class="{ 'on-admin': onAdmin }">
+  <div
+    class='base-checkbox'
+    :class="{ 'on-admin': onAdmin, error: (v && v.$dirty && !checked)}"
+  >
     <label class='custom-checkbox'>
-      <input :checked='checked' type='checkbox' @change="$emit('change', $event.target.checked)">
-      <span :class="{ 'base-checkbox__admin': onAdmin }">{{ text }}</span>
+      <input :disabled='disabled' :checked='checked' type='checkbox' @change="changeState">
+      <span class='base-checkbox__text' :class="{ 'base-checkbox__admin': onAdmin }">{{ text }}</span>
     </label>
   </div>
 </template>
@@ -17,11 +20,18 @@ export default {
   props: {
     text: { type: String, default: '' },
     checked: { type: Boolean, default: false },
-    onAdmin: { type: Boolean, default: false }
+    onAdmin: { type: Boolean, default: false },
+    disabled: { type: Boolean, default: false },
+    v: { type: Object },
   },
   data() {
     return {
       check: true
+    }
+  },
+  methods: {
+    changeState(e) {
+      this.$emit('change', e.target.checked)
     }
   }
 }
@@ -30,6 +40,20 @@ export default {
 <style lang='scss' scoped>
 .on-admin {
   margin-bottom: 22px;
+}
+
+.error {
+ .base-checkbox__text {
+   color: red;
+ }
+
+  .custom-checkbox > span::before {
+    border-color: red;
+  }
+
+  .custom-checkbox > input:not(:disabled):not(:checked) + span:hover::before {
+    border-color: red;
+  }
 }
 
 .base-checkbox, .base-checkbox > label {

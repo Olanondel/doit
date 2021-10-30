@@ -1,4 +1,4 @@
-<template>
+  <template>
   <section class='login-container'>
     <div class='login-page'>
 
@@ -11,20 +11,24 @@
               v-model='email'
               title='Username or Email'
               class='login__input'
+              :v='$v.email'
+              :disabled='isLoading'
             />
             <BaseInput
               v-model='password'
               title='Password'
               class='login__input'
               type='password'
+              :v='$v.password'
+              :disabled='isLoading'
             />
-            <BaseButton text='Login' @click='login' />
+            <BaseButton :disabled='isLoading' text='Login' @click='login' />
           </form>
 
           <div class='login__with'>
             <div class='login__social-text'>or login with</div>
             <ul class='login__social-list'>
-              <li class='login__social-item facebook' @click='fbLogin'></li>
+              <li class='login__social-item facebook'></li>
               <li class='login__social-item social'></li>
               <li class='login__social-item google'></li>
               <li class='login__social-item steam'></li>
@@ -38,7 +42,7 @@
           <nuxt-link to=''>Forgot password?</nuxt-link>
         </div>
         <div>Don't have an account?
-          <router-link to=''>Sign up!</router-link>
+          <router-link to='/signup/step-1'>Sign up!</router-link>
         </div>
       </div>
     </div>
@@ -47,14 +51,18 @@
 
 <script>
 
+import { email, maxLength, minLength, required } from 'vuelidate/lib/validators'
+
 export default {
   name: 'Login',
   components: {},
   layout: 'auth',
   data() {
     return {
-      email: 'prbaoleg@gmail.com',
-      password: 'zfvnmmn',
+      email: 'prbaoleg@gmail.com', // prbaoleg@gmail.com
+      password: 'zfvnmmn', // zfvnmmn
+      isLoading: false,
+
       social: [
         { title: 'facebook', icon: '~/assets/img/auth/facebook.svg' },
         { title: 'social', icon: '~/assets/img/auth/social.svg' },
@@ -63,19 +71,33 @@ export default {
       ]
     }
   },
+  validations: {
+    email: {
+      email,
+      required,
+      minLength: minLength(3),
+      maxLength: maxLength(18),
+    },
+    password: {
+      required,
+      minLength: minLength(4),
+      maxLength: maxLength(16),
+    }
+  },
   methods: {
     async login() {
-      try {
-        await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
-      } catch (err) {
-        alert(err)
+      this.$v.$touch()
+
+      if (!this.$v.$invalid) {
+        try {
+          this.isLoading = true
+          await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
+        } catch (err) {
+          alert(err)
+          this.isLoading = false
+        }
       }
     },
-
-    async fbLogin() {
-
-      await this.$api.auth.facebook()
-    }
   }
 }
 </script>

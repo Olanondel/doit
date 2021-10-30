@@ -1,5 +1,5 @@
 <template>
-  <button @click.prevent='click' class='base-button'>
+  <button :disabled='disabled' class='base-button' @click.prevent='click'>
     {{text}}
   </button>
 </template>
@@ -8,7 +8,8 @@
 export default {
   name: 'BaseButton',
   props: {
-    text: String
+    disabled: { type: Boolean, default: false },
+    text: { type: String, default: '' }
   },
   methods: {
     click() {
@@ -36,6 +37,11 @@ export default {
 
   &:hover {
     background: linear-gradient(180deg, #0960E0 100%, #2788F6 0%);
+  }
+
+  &:disabled {
+    background: gray;
+    cursor: not-allowed;
   }
 }
 </style>

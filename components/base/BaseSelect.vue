@@ -1,11 +1,17 @@
 <template>
-  <div class='base-select-wrapper' :class='{ onAdmin: onAdmin }'>
+  <div
+    class='base-select-wrapper'
+    :class='{
+      onAdmin: onAdmin,
+      error: (v && v.$dirty && v.$invalid),
+     }'
+  >
     <div class='base-text'>{{ title }}</div>
     <vSelect
       v-model='selected'
       :options='options'
       v-bind='$attrs'
-      placeholder='Choose the value'
+      :placeholder='placeholder'
     />
   </div>
 </template>
@@ -28,6 +34,8 @@ export default {
     title: { type: String, default: '' },
     current: { type: String, default: '' },
     onAdmin: { type: Boolean, default: false },
+    placeholder: { type: String, default: 'choose' },
+    v: { type: Object }
   },
   data() {
     return {}
@@ -51,6 +59,12 @@ export default {
   width: 100%;
 }
 
+.base-text {
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
 .base-select-wrapper.onAdmin {
   margin-bottom: 22px;
 }
@@ -65,16 +79,62 @@ export default {
   font-variant: small-caps;
 }
 
+.error {
+  .vs__dropdown-toggle {
+    border: 1px solid red;
+  }
+
+  .vs__search {
+    color: red;
+  }
+
+  .vs__open-indicator {
+    fill: red;
+  }
+}
+
+.success {
+  .vs__dropdown-toggle {
+    border: 1px solid green;
+  }
+
+  .vs__search {
+    color: green;
+  }
+
+  .vs__open-indicator {
+    fill: green;
+  }
+}
+
 .vs__dropdown-toggle {
   background: transparent;
   border-radius: 2px;
   border: 1px solid #1C2F4D;
 }
 
+.vs--disabled {
+  .vs__dropdown-toggle {
+    background: #121F33;
+    border: none;
+    color: #98A4B5;
+    cursor: not-allowed;
+  }
+
+  .vs__open-indicator {
+    background: #121F33 !important;
+  }
+
+  input {
+    background: #121F33 !important;
+  }
+}
+
 .vs__dropdown-menu {
   background: #0B1729;
   color: #627CA3;
   padding: 0;
+
 }
 
 .vs__dropdown-menu li {
@@ -102,6 +162,11 @@ export default {
 
 .vs__open-indicator {
   fill: #627CA3;
+}
+
+.vs__dropdown-option--highlight {
+  background: #1C2F4D;
+  color: #fff !important;
 }
 
 .vs--open {
@@ -208,6 +273,7 @@ export default {
 
     & .vs__dropdown-option--highlight {
       background: #20252B;
+      color: #fff;
     }
 
 

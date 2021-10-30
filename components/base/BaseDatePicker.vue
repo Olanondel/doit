@@ -11,8 +11,10 @@
       <template v-slot='{ inputValue, inputEvents }'>
         <input
           class='bg-dark border px-2 py-1 rounded base-input calendar-icon'
+          :class='{ error: (v && v.$dirty && !v.required) }'
           :value='inputValue'
           v-on='inputEvents'
+          :disabled='disabled'
         />
       </template>
     </v-date-picker>
@@ -32,7 +34,9 @@ export default {
     date: { type: String, default: '1995-12-30' },
     mode: { type: String, default: '' },
     onAdmin: { type: Boolean, default: false },
-    config: { type: Object, default: () => ({ type: 'string', mask: 'YYYY-MM-DD', }) }
+    config: { type: Object, default: () => ({ type: 'string', mask: 'YYYY-MM-DD', }) },
+    v: { type: Object },
+    disabled: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -52,7 +56,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style scoped lang='scss'>
 .calendar-icon {
   background: transparent url('../../assets/img/icons/datepicker-calendar.svg') no-repeat 200px center;
 }

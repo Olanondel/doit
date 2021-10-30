@@ -6,20 +6,25 @@
       <div class='login__form-wrapper'>
         <form class='login__form'>
           <BaseInput
-            @changeValue='changeEmail'
+            v-model='cEmail'
             :value='email'
-            text='Email'
+            title='Email'
             class='login__input'
+            :v='v.email'
+            error-text='fuck!'
+            :disabled='isLoading'
           />
           <BaseInput
-            @changeValue='changePassword'
+            v-model='cPassword'
             :value='password'
-            text='Password'
+            title='Password'
             class='login__input'
             type='password'
+            :v='v.password'
+            :disabled='isLoading'
           />
 
-          <BaseButton text='next step' @click='nextStep' />
+          <BaseButton :disabled='isLoading' text='next step' @click='nextStep' />
         </form>
 
         <div class='login__with'>
@@ -37,7 +42,7 @@
     </div>
 
     <div class='bottom-links'>
-      <nuxt-link to=''>Already have an account?</nuxt-link>
+      <nuxt-link to='/login'>Already have an account?</nuxt-link>
     </div>
   </div>
 </template>
@@ -48,9 +53,13 @@ import BaseButton from '../../components/base/BaseButton'
 export default {
   name: 'step-1',
   components: { BaseButton  },
+  auth: false,
+  layout: 'auth',
   props: {
     email: { type: String, default: '' },
-    password: { type: String, default: '' }
+    password: { type: String, default: '' },
+    v: { type: Object },
+    isLoading: { type: Boolean, default: false },
   },
   data() {
     return {
@@ -62,17 +71,28 @@ export default {
       ]
     }
   },
+  computed: {
+    cEmail: {
+      get() { return this.email },
+
+      set(v) { this.$emit('changeEmail', v) }
+    },
+    cPassword: {
+      get() { return this.password },
+
+      set(v) { this.$emit('changePassword', v) }
+    },
+  },
   methods: {
     nextStep() {
-      this.$router.push('step-2')
-    },
-    changeEmail(email) {
-      this.$emit('changeEmail', email)
-    },
-    changePassword(password) {
-      this.$emit('changePassword', password)
+      this.v.email.$touch()
+      this.v.password.$touch()
+
+      if (!this.v.email.$invalid && !this.v.password.$invalid) {
+        this.$router.push('step-2')
+      }
     }
-  }
+  },
 }
 </script>
 

@@ -1,12 +1,12 @@
 const ignorePaths = ["\u002F__webpack_hmr","\u002F_loading","\u002F_nuxt\u002F"]
 
 importScripts(
-  'https://www.gstatic.com/firebasejs/9.1.0/firebase-app.js'
+  'https://www.gstatic.com/firebasejs/8.1.1-1.0.0-eap-firestore-debug.9c6096f43/firebase-app.js'
 )
 importScripts(
-  'https://www.gstatic.com/firebasejs/9.1.0/firebase-auth.js'
+  'https://www.gstatic.com/firebasejs/8.1.1-1.0.0-eap-firestore-debug.9c6096f43/firebase-auth.js'
 )
-firebase.initializeApp({"apiKey":"AIzaSyDa-YwgWTp2GDyVYEfv-XLb62100_HoEvU","authDomain":"nuxt-fire-demo.firebaseapp.com","projectId":"nuxt-fire-demo","storageBucket":"nuxt-fire-demo.appspot.com","messagingSenderId":"807370470428","appId":"1:807370470428:web:26da98c86c3fd352","measurementId":"G-XT6PVC1D4X"})
+firebase.initializeApp({"apiKey":"AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k","authDomain":"spacelab-proj-doit.firebaseapp.com","projectId":"spacelab-proj-doit","storageBucket":"spacelab-proj-doit.appspot.com","messagingSenderId":"989453622302","appId":"1:989453622302:web:e681c58ba29bb23f9de20f"})
 
 // Initialize authService
 const authService = firebase.auth()
