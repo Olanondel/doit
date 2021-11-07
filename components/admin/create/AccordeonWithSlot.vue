@@ -1,7 +1,7 @@
 <template>
   <div ref='accordionSection' class='create-block'>
     <!--    Header    -->
-    <div @click='toggleAccordion' class='create-block__header'>
+    <div class='create-block__header' @click='toggleAccordion'>
       <h3 class='create-block__title'>{{ title }}</h3>
 
       <div class='create-block__icon'></div>

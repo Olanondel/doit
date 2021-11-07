@@ -23,10 +23,10 @@
       </label>
     </div>
 
-    <div v-if='v && v.$dirty && !v.minLength' class='error-message'>Минимальная длина поля: {{v.$params.minLength.min}}</div>
-    <div v-else-if='v && v.$dirty && !v.maxLength' class='error-message'>Максимальная длина поля: {{v.$params.maxLength.max}}</div>
-    <div v-else-if='v && v.$dirty && v.$params.email && !v.email' class='error-message'>Введите валидный email!</div>
-    <div v-else-if='v && v.$dirty && !v.required' class='error-message'>Заполните это поле!</div>
+    <div v-if='v && v.$dirty && v.hasOwnProperty("minLength") && !v.minLength' class='error-message'>Минимальная длина поля: {{v.$params.minLength.min}}</div>
+    <div v-else-if='v && v.$dirty && v.hasOwnProperty("maxLength") && !v.maxLength' class='error-message'>Максимальная длина поля: {{v.$params.maxLength.max}}</div>
+    <div v-else-if='v && v.$dirty && v.hasOwnProperty("email") && v.$params.email && !v.email' class='error-message'>Введите валидный email!</div>
+    <div v-else-if='v && v.$dirty && v.hasOwnProperty("required") && !v.required' class='error-message'>Заполните это поле!</div>
 
   </div>
 </template>
@@ -182,10 +182,11 @@ export default {
 .error-message {
   position: absolute;
   color: #B83333;
-  margin-top: 5px;
+  font-size: 12px;
 }
 
 .on-admin {
+
   &.container {
     margin-bottom: 22px;
   }
@@ -215,32 +216,20 @@ export default {
     border: 1px solid #20252B;
     background: #0F1215;
     color: #CCCDCD;
-  }
 
-
-  &.success {
-    .base-input-wrapper {
-      border: 1px solid #20252B;
+    &:disabled {
+      opacity: .6;
     }
 
-    .base-input {
-      border: none;
-    }
-
-    .base-url {
-      background: #4CB725;
-      color: #CCCDCD;
+    &::placeholder {
+      color: #20252B;
     }
   }
 
-  &.error {
+  .error {
     .base-input {
       border: none;
-    }
-
-    .base-url {
-      background: #B83333;
-      color: #CCCDCD;
+      background: transparent;
     }
   }
 }

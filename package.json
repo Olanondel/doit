@@ -17,6 +17,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "core-js": "^3.15.1",
     "firebase": "^8.1.1-1.0.0-eap-firestore-debug.9c6096f43",
+    "firebase-admin": "^10.0.0",
     "nuxt": "^2.15.7",
     "swiper": "^6.7.5",
     "v-calendar": "^2.3.2",

@@ -50,6 +50,14 @@ a {
   }
 }
 
+.show-on-mobile {
+  display: none;
+
+  @media screen and (max-width: 680px) {
+    display: block !important;
+  }
+}
+
 .section-title {
   font-weight: 700;
   font-size: 44px;
@@ -110,5 +118,54 @@ a {
 
 .flex-center {
   display: flex;
+  justify-content: center;
+}
+
+
+// USER PANEL
+.user-panel {
+
+  &__title {
+    text-align: center;
+    font-size: 48px;
+    font-weight: 700;
+    color: #F5F5F5;
+    line-height: 66px;
+    margin-bottom: 56px;
+  }
+
+  &__form {
+    margin: 0 auto;
+    max-width: 360px;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 30px;
+  }
+
+  &__link {
+    flex: 1 1 auto;
+    max-width: 33.3%;
+    text-align: center;
+    font-weight: 700;
+    font-size: 22px;
+    line-height: 22px;
+    color: #F5F5F5;
+    padding: 30px 15px;
+    border: 2px solid #20252B;
+    margin-bottom: 50px;
+    cursor: pointer;
+
+    &:hover {
+      background: #001F3E;
+    }
+  }
+}
+
+.control__buttons {
+  display: flex;
+  gap: 30px;
   justify-content: center;
 }

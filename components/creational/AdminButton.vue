@@ -22,5 +22,10 @@ export default {
   background: #1A222D;
   border: none;
   cursor: pointer;
+
+  &:disabled {
+    opacity: .7;
+    cursor: not-allowed;
+  }
 }
 </style>

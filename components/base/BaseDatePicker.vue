@@ -13,8 +13,8 @@
           class='bg-dark border px-2 py-1 rounded base-input calendar-icon'
           :class='{ error: (v && v.$dirty && !v.required) }'
           :value='inputValue'
-          v-on='inputEvents'
           :disabled='disabled'
+          v-on='inputEvents'
         />
       </template>
     </v-date-picker>
@@ -138,6 +138,8 @@ export default {
 }
 
 .on-admin {
+  margin-bottom: 22px;
+
 &.container {
    margin-bottom: 22px;
  }
@@ -167,6 +169,10 @@ label {
   border: 1px solid #20252B;
   background: #0F1215;
   color: #CCCDCD;
+
+  &:disabled {
+    opacity: .7;
+  }
 }
 
 

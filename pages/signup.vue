@@ -79,10 +79,9 @@ export default {
 
         await this.$fire.firestore.collection('players').doc(auth.user.uid).set({
           email: this.email,
-          password: this.password,
           username: this.username,
           country: this.country,
-          created: user.metadata.creationTime,
+          created: this.getDate(),
           dob: this.dob,
           id: user.uid,
           name: '',
@@ -120,6 +119,14 @@ export default {
     },
     changeTermsAgree(v) {
       this.isTermsAgree = v
+    },
+    getDate() {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+
+      return (mm + '/' + dd + '/' + yyyy)
     }
   }
 }

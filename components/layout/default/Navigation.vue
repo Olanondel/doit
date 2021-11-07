@@ -8,7 +8,7 @@
 
     <div class='nav__list-wrapper'>
 
-      <div ref='nav__burger-icon' @click='toggleMenu' class='nav__burger-icon'></div>
+      <div ref='nav__burger-icon' class='nav__burger-icon' @click='toggleMenu'></div>
 
       <div ref='nav-group' class='nav__group'>
         <ul class='nav__list'>
@@ -22,6 +22,18 @@
             {{ item.text }}
           </nuxt-link>
         </ul>
+
+        <div v-if='$auth.loggedIn' class='nav__item show-on-mobile' @click='logout'>Logout</div>
+
+        <div v-else class='login show-on-mobile'>
+          <router-link to='login' class='login__login login__item'>
+            Login
+          </router-link>
+          <router-link to='signup/step-1' class='login__signup login__item'>
+            Sign up
+          </router-link>
+        </div>
+
       </div>
     </div>
   </nav>
@@ -48,7 +60,14 @@ export default {
     toggleMenu() {
       this.$refs['nav__burger-icon'].classList.toggle('nav__burger-icon_open')
       this.$refs['nav-group'].classList.toggle('nav__group_open')
-      // document.body.style.overflow = (document.body.style.overflow === 'hidden') ? 'visible' : 'hidden'
+      document.body.style.overflow = (document.body.style.overflow === 'hidden') ? 'visible' : 'hidden'
+    },
+    async logout() {
+      await this.$api.auth.logout()
+
+      this.$auth.logout('local')
+
+      this.$auth.redirect('/login')
     }
   }
 }
@@ -191,6 +210,29 @@ export default {
     @media screen and (min-width: 680px) {
       display: none;
     }
+  }
+}
+
+.login {
+  width: 100%;
+
+  &__item {
+    width: 100%;
+    padding: 16px;
+    text-align: center;
+    border-radius: 2px;
+    color: #F5F5F5;
+    font-weight: 700;
+    display: block;
+  }
+
+  &__login {
+    background: #1A222D;
+    margin-bottom: 12px;
+  }
+
+  &__signup {
+    background: linear-gradient(180deg, #2788F6 0%, #0960E0 100%);
   }
 }
 </style>

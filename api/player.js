@@ -1,11 +1,16 @@
 export default fb => ({
   async setUser(uid, user) {
-    await fb.collection('players').doc(uid).set(user)
+    await fb.firestore.collection('players').doc(uid).set(user)
   },
   async getUser(uid) {
-    const res = await fb.collection('players').doc(uid).get()
+    const res = await fb.firestore.collection('players').doc(uid).get()
 
     return res.data()
+  },
+  async removeUser(id) {
+    await fb.firestore.collection('players').doc(id).delete()
+
+    await fb.auth.currentUser.delete()
   },
   async getUsers(limit, startAfter) {
     const ref = startAfter
@@ -19,5 +24,5 @@ export default fb => ({
     const data = res.docs.map(el => el.data())
 
     return [data, lastVisible]
-  }
+  },
 })

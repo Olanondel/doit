@@ -91,6 +91,9 @@ export default {
       if (!this.$v.$invalid) {
         try {
           this.isLoading = true
+
+          await this.$api.auth.login(this.email, this.password)
+
           await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
         } catch (err) {
           alert(err)

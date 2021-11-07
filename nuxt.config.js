@@ -20,6 +20,7 @@ export default {
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [
     '@/assets/styles/reset.css',
+    '@/assets/styles/animation.scss',
     '@/assets/styles/styles.scss',
     '@/assets/styles/plugins/swiper-bundle.css',
     '@/node_modules/vue-select/dist/vue-select.css'
@@ -69,12 +70,13 @@ export default {
         services: {
           auth: {
             initialize: {
-
             },
             ssr: true
           },
           storage: true,
-          firestore: true,
+          firestore: {
+            ssr: true
+          },
         }
       }
     ]
@@ -102,21 +104,20 @@ export default {
             method: 'post',
             propertyName: 'users',
             },
-          logout: {
-            url: 'https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBIm7RzKFJIFAPI3TT56c0oZ9q9Gzo4T6k',
-            method: 'post'
-          }
-        },
-        redirect: {
-          logout: '/login',
         }
       }
     },
+    redirect: {
+      login: '/',
+      logout: '/login'
+    }
   },
 
   router: {
-    middleware: ['auth'] // auth: false for specific component, guest for home redirect
+    middleware: ['admin', 'auth'] // auth: false for specific component, guest for home redirect
   },
+
+  loading: '~/components/loading.vue',
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {

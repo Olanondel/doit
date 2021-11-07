@@ -1,13 +1,16 @@
 <template>
   <div class='players'>
-    <div class='players__item'>List of players</div>
-    <div class='players__item'>Edit list of players</div>
+    <div class='players__item' :class='{ disabled }'>List of players</div>
+    <div class='players__item' :class='{ disabled }'>Edit list of players</div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'PlayersButtons'
+  name: 'PlayersButtons',
+  props: {
+    disabled: { type: Boolean, default: false }
+  }
 }
 </script>
 
@@ -22,6 +25,11 @@ export default {
     padding: 12px 16px;
     background: #1A222D;
     cursor: pointer;
+
+    &.disabled {
+      opacity: .7;
+      cursor: not-allowed;
+    }
   }
 }
 </style>

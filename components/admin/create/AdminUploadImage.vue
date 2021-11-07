@@ -2,8 +2,8 @@
   <div class='upload-image'>
     <div class='upload-image__title'> {{ title }} </div>
 
-      <label class='upload-image__content'>
-        <input ref='imageFile' class='upload-image__file' placeholder='image url' type='file' @change='getImage'>
+      <label class='upload-image__content' :class='{ disabled }'>
+        <input ref='imageFile' :disabled='disabled' class='upload-image__file' placeholder='image url' type='file' @change='getImage'>
         <div class='upload-image__url-input'> {{ file || 'FILE' }} </div>
         <div class='upload-image__button'>UPLOAD</div>
       </label>
@@ -18,17 +18,20 @@ export default {
   props: {
     title: { type: String, default: '' },
     file: { type: String, default: 'FILE' },
+    disabled: { type: Boolean, default: false },
   },
   methods: {
     getImage() {
       const image = this.$refs.imageFile.files[0]
       const reader = new FileReader()
 
-      reader.onload = () => {
-        this.$emit('getImage', [reader.result, image.name])
-      }
+      if(image) {
+        reader.onload = () => {
+          this.$emit('getImage', [image, image.name, reader.result])
+        }
 
-      reader.readAsDataURL(image)
+        reader.readAsDataURL(image)
+      }
     }
   }
 }
@@ -55,10 +58,18 @@ export default {
     justify-content: space-between;
     cursor: pointer;
     flex: 1 1 auto;
+    overflow: hidden;
+
+    &.disabled {
+      opacity: .7;
+      cursor: not-allowed;
+    }
   }
 
   &__file {
     display: none;
+    text-overflow: ellipsis;
+    overflow: hidden;
   }
 
   &__url-input {
@@ -72,12 +83,14 @@ export default {
     color: #3C434D;
     display: flex;
     align-items: center;
+    flex: 1 1 auto;
+    overflow: hidden;
   }
 
   &__button {
     max-width: 157px;
     width: 100%;
-    padding: 16px 0;
+    padding: 16px;
     background: #1A222D;
     display: flex;
     justify-content: center;

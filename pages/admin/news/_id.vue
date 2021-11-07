@@ -1,0 +1,144 @@
+<template>
+  <div class='container'>
+    <AccordeonWithSlot title='basic'>
+
+      <BaseInput v-model='title' title='Title' on-admin />
+
+      <BaseSelect
+        v-model='game'
+        :options='games'
+        title='Game'
+        on-admin
+        :reduce='game => game.value'
+        label='game'
+      />
+
+      <BaseTextarea v-model='description' title='Description' on-admin />
+
+      <AdminUploadImage :disabled='isLoading' title='Main Image' :file='mainImageFileName' @getImage='getImage' />
+
+    </AccordeonWithSlot>
+
+    <div class='control__buttons'>
+      <AdminButton :disabled='!id || isLoading' text='Remove News' @click='removeNews' />
+      <AdminButton :disabled='isLoading' text='Add News' @click='setNews' />
+    </div>
+  </div>
+</template>
+
+<script>
+import AccordeonWithSlot from '../../../components/admin/create/AccordeonWithSlot'
+import BaseInput from '../../../components/base/BaseInput'
+import BaseTextarea from '../../../components/base/BaseTextarea'
+import AdminUploadImage from '../../../components/admin/create/AdminUploadImage'
+import BaseSelect from '../../../components/base/BaseSelect'
+import AdminButton from '../../../components/creational/AdminButton'
+
+export default {
+  components: { AdminButton, BaseSelect, AdminUploadImage, BaseTextarea, BaseInput, AccordeonWithSlot },
+  async asyncData({ $api, error, params }) {
+    const data = await $api.news.getNews(params.id)
+
+    if (data) {
+      return data
+    }
+
+    if (params.id !== 'addNews') {
+      error({ statusCode: 404 })
+    }
+
+  },
+  data() {
+    return {
+      title: '',
+      id: '',
+      description: '',
+      game: '',
+      mainImage: '',
+      mainImageFileName: '',
+      mainImageWasChanged: false,
+      initialMainImage: '',
+
+      isLoading: false,
+      games: [
+        { game: 'StarCraft ||', value: 'starcraft2' },
+        { game: 'Dota ||', value: 'dota2' },
+        { game: 'CS:GO', value: 'csgo' },
+        { game: 'LOL', value: 'leagueOfLegends' },
+        { game: 'Fortnite', value: 'fortnite' }
+      ]
+    }
+  },
+  methods: {
+    getImage([img, name]) {
+      this.mainImage = img
+      this.mainImageFileName = name
+      this.mainImageWasChanged = true
+    },
+    async setNews() {
+
+      try {
+        this.isLoading = true
+
+        const id = this.id || await this.$api.general.getId('news')
+
+        if (this.initialMainImage && this.mainImageWasChanged) {
+          await this.$api.general.removeImage('news', id, this.initialMainImage)
+        }
+
+        const mainImage = await this.$api.general.uploadImage(this.mainImage, 'news', id, this.mainImageFileName)
+
+        await this.$api.news.setNews({
+          id,
+          mainImage,
+          title: this.title,
+          description: this.description,
+          game: this.game,
+          mainImageFileName: this.mainImageFileName,
+          mainImageWasChanged: false,
+          initialMainImage: this.mainImageFileName
+        })
+
+        this.isLoading = false
+        alert('success')
+
+        await this.$router.push(id)
+      } catch (err) {
+        alert(err)
+        this.isLoading = false
+      }
+    },
+    async removeNews() {
+      try {
+        this.isLoading = true
+
+        if (this.initialMainImage) {
+          await this.$api.general.removeImage('news', this.id, this.mainImageFileName)
+        }
+
+        await this.$api.news.removeNews(this.id)
+
+        alert('success')
+
+        await this.$router.push('addNews')
+        this.isLoading = false
+      } catch (err) {
+        alert(err)
+        this.isLoading = false
+      }
+    }
+  }
+}
+</script>
+
+<style lang='scss' scoped>
+.container {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.control__buttons {
+  text-align: center;
+}
+</style>

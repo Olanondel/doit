@@ -31,14 +31,14 @@
             <nuxt-link
               v-for='link in nav'
               :key='link.title'
-              to='to'
+              :to='link.url'
             >{{ link.title }}
             </nuxt-link>
           </div>
 
           <div class='profile-bar__support-nav'>
-            <nuxt-link to='to'>Support</nuxt-link>
-            <nuxt-link to='to'>Settings</nuxt-link>
+            <nuxt-link to='/user-panel/support'>Support</nuxt-link>
+            <nuxt-link to='/user-panel/settings'>Settings</nuxt-link>
             <nuxt-link to='' @click.native='logout'>Logout</nuxt-link>
           </div>
         </div>
@@ -54,17 +54,16 @@ export default {
   data() {
     return {
       nav: [
-        { title: 'My profile' },
-        { title: 'My team' },
-        { title: 'Withdraw' },
-        { title: 'Deposit' },
-        { title: 'Premium' },
-        { title: 'Statistics' }
+        { title: 'My user-panel', url: 'user-panel' },
+        { title: 'My team', url: '/user-panel/my-team' },
+        { title: 'Withdraw', url: '/user-panel/withdraw' },
+        { title: 'Deposit', url: '/user-panel/deposit' },
+        { title: 'Premium', url: '/user-panel/premium' },
       ],
       helpNav: [
-        { title: 'Support' },
-        { title: 'Settings' },
-        { title: 'Logout' },
+        { title: 'Support', url: '/user-panel/support' },
+        { title: 'Settings', url: '/user-panel/settings' },
+        { title: 'Logout', url: '' },
       ]
     }
   },

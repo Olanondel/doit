@@ -63,9 +63,11 @@
       />
 
       <BaseSelect
-        v-model='serversSystem'
+        v-model='serverSystem'
         title='Servers system'
-        :options='serversSystems'
+        :options='serverSystems'
+        :reduce='game => game.value'
+        label='game'
         on-admin
       />
 
@@ -99,13 +101,15 @@
     </AccordeonWithSlot>
 
     <div class='control-buttons'>
-      <AdminButton
-        text='Delete Game'
-      />
+<!--      <AdminButton-->
+<!--        text='Delete Game'-->
+<!--        :disabled='isLoading || isMain'-->
+<!--        @click='removeGame'-->
+<!--      />-->
       <AdminButton
         :disabled='isLoading'
         text='Save Game'
-        @click='getGames'
+        @click='setGame'
       />
     </div>
 
@@ -113,49 +117,65 @@
 </template>
 
 <script>
-import AccordeonWithSlot from '../../components/admin/create/AccordeonWithSlot'
-import BaseSelect from '../../components/base/BaseSelect'
-import BaseInput from '../../components/base/BaseInput'
-import BaseTextarea from '../../components/base/BaseTextarea'
-import AdminUploadImage from '../../components/admin/create/AdminUploadImage'
-import AdminRadio from '../../components/admin/create/AdminRadio'
-import CreateTitle from '../../components/creational/CreateTitle'
-import UploadImageWithInput from '../../components/creational/UploadImageWithInput'
-import AdminButton from '../../components/creational/AdminButton'
+import AccordeonWithSlot from '../../../components/admin/create/AccordeonWithSlot'
+import BaseSelect from '../../../components/base/BaseSelect'
+import BaseInput from '../../../components/base/BaseInput'
+import BaseTextarea from '../../../components/base/BaseTextarea'
+import AdminUploadImage from '../../../components/admin/create/AdminUploadImage'
+import AdminRadio from '../../../components/admin/create/AdminRadio'
+import CreateTitle from '../../../components/creational/CreateTitle'
+import UploadImageWithInput from '../../../components/creational/UploadImageWithInput'
+import AdminButton from '../../../components/creational/AdminButton'
 
 export default {
   name: 'GameData',
   components: { AdminButton, UploadImageWithInput, CreateTitle, AdminRadio, AdminUploadImage, BaseTextarea, BaseInput, BaseSelect, AccordeonWithSlot },
+  validate({ params }) {
+    return !!params.id
+  },
+  async asyncData({ $api, params, error }) {
+    const data = await $api.game.getGame(params.id)
+
+    if ( !(data || params.id === 'newGame') ) { error({ statusCode: 404 }) }
+
+    return data
+  },
   data() {
     return {
       name: '',
       id: '',
-      isMain: false,
+      isMain: true,
       newName: '',
       url: '',
       description: '',
       capsules: [
-        { title: 'Main Banner 387x500*', image: null, name: '' },
-        { title: 'Mobile Banner 329x129*', image: null, name: '' },
-        { title: 'Game icon 32x32*', image: null, name: '' },
-        { title: 'Game logo 253x45*', image: null, name: '' },
-        { title: 'Game background 2206 x 2278', image: null, name: '' },
-        { title: 'Game logo 64x64*', image: null, name: '' },
+        { title: 'Main Banner 387x500*', image: null, name: '', initialName: '', wasChanged: false },
+        { title: 'Mobile Banner 329x129*', image: null, name: '', initialName: '', wasChanged: false },
+        { title: 'Game icon 32x32*', image: null, name: '', initialName: '', wasChanged: false },
+        { title: 'Game logo 253x45*', image: null, name: '', initialName: '', wasChanged: false },
+        { title: 'Game background 2206 x 2278', image: null, name: '', initialName: '', wasChanged: false },
+        { title: 'Game logo 64x64*', image: null, name: '', initialName: '', wasChanged: false },
       ],
       isTournamentSystemActive: false,
-      serversSystem: 'CS:GO',
+      serverSystem: '',
       isMapVotingSystem: false,
       maps: [
-        { map: '', fileName: '', image: '' },
+        { map: '', fileName: '', image: '', initialImage: '', wasChanged: false },
       ],
+      games: ['StarCraft 2', 'Dota 2', 'CS:GO', 'LOL', 'Fortnite'],
 
-
-      games: ['StarCraft ||', 'Dota ||', 'CS:GO', 'LOL', 'Fortnite', 'Add Custom'],
+      // local
       trueFalseOptions: [
         { value: 'Yes', text: 'Yes' },
         { value: 'No', text: 'No' },
       ],
-      serversSystems: ['StarCraft ||', 'Dota ||', 'CS:GO', 'LOL', 'Fortnite'],
+      serverSystems: [
+        { game: 'StarCraft ||', value: 'starcraft2' },
+        { game: 'Dota ||', value: 'dota2' },
+        { game: 'CS:GO', value: 'csgo' },
+        { game: 'LOL', value: 'leagueOfLegends' },
+        { game: 'Fortnite', value: 'fortnite' },
+      ],
       isLoading: false
     }
   },
@@ -190,36 +210,61 @@ export default {
       try {
         this.isLoading = true
 
+        const id = this.id || await this.$api.general.getId('games')
+
+        const capsules = await this.$api.game.uploadCapsules(this.capsules, id)
+
+        const maps = await this.$api.game.uploadMaps(this.maps, id)
+
         await this.$api.game.setGame({
+          id,
           name: this.name,
-          id: this.id,
           isMain: this.isMain,
           url: this.url,
           description: this.description,
-          capsules: this.capsules,
+          capsules,
           isTournamentSystemActive: this.isTournamentSystemActive,
-          serversSystem: this.serversSystem,
+          serverSystem: this.serverSystem,
           isMapVotingSystem: this.isMapVotingSystem,
-          maps: this.maps
+          maps
         })
 
         alert('success')
-
         this.isLoading = false
-      } catch (e) {
 
+        await this.$router.push(id)
+      } catch (e) {
+        alert(e)
+        this.isLoading = false
+      }
+    },
+    async removeGame() {
+      if (!this.isMain) {
+        try {
+          this.isLoading = true
+
+          await this.$api.game.removeCapsules(this.capsules, this.id)
+
+          await this.$api.game.removeGame(this.id)
+          this.isLoading = false
+        } catch (err) {
+          alert(err)
+          this.isLoading = false
+        }
       }
     },
     getImage([img, name], idx) {
       this.capsules[idx].image = img
       this.capsules[idx].name = name
+      this.capsules[idx].wasChanged = true
     },
     getMapImage([file, name], index) {
       this.maps[index].fileName = name
       this.maps[index].image = file
+      this.maps[index].wasChanged = true
     },
     addMap() {
-      this.maps.push({ map: '', fileName: '', image: '' })
+      this.maps.push({ map: '', fileName: '', image: '', initialImage: '', wasChanged: false })
 
       this.$refs['map-voting'].resize()
     },

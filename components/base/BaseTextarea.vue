@@ -102,6 +102,8 @@ export default {
 }
 
 .on-admin {
+  margin-bottom: 22px;
+
   .base-text {
     margin-bottom: 12px;
     font-weight: 700;

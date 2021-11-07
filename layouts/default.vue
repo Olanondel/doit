@@ -64,6 +64,7 @@ export default {
 
   @media (max-width: 767px) {
     padding: 0 15px 0 15px;
+    margin-bottom: 80px;
 
   }
 

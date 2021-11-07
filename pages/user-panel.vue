@@ -4,16 +4,16 @@
 
       <div class='player-card profile-sidebar__player-card'>
         <div class='player-card__img-wrap'>
-          <img src='../assets/img/profile/profile-image.png' alt='profile-image' class='player-card__img'>
+          <img :src='avatar' alt='profile-image' class='player-card__img'>
         </div>
 
         <div class='player-card__names'>
-          <div class='player-card__name'>{{ fullName }}</div>
+          <div class='player-card__name'>{{ name }}</div>
 
-          <div class='player-card__nickname'>{{ profile.nickname }}</div>
+          <div class='player-card__nickname'> {{ nickname }}</div>
 
           <div class='player-card__team'>
-            <nuxt-link to='/team/'>{{ profile.team }}</nuxt-link>
+<!--            <nuxt-link to='/team/'>You are not have a team</nuxt-link>-->
           </div>
 
           <div class='player-card__contacts'>
@@ -28,50 +28,86 @@
       <div class='tab-nav'>
         <ul class='tab-nav__list'>
           <nuxt-link
-            :to="item.to"
-            tag='li'
             v-for='(item, index) in nav'
             :key='index'
+            :to="item.to"
+            tag='li'
+            exact
             class='tab-nav__list-item'
             active-class='tab-nav__active'
           >
             {{ item.text }}
           </nuxt-link>
+
+          <li class='tab-nav__list-item' @click='logout'>Logout</li>
         </ul>
       </div>
 
     </div>
 
     <div class='tab-content'>
-      <nuxt-child />
+      <nuxt-child/>
     </div>
   </section>
 </template>
 
 <script>
 export default {
-  name: 'profile',
   data() {
     return {
+      age: '',
+      avatarFileName: '',
+      avatarInitialFileName: '',
+      avatar: '',
+      country: '',
+      id: '',
+      name: '',
+      nickname: '',
+      dob: '',
+      created: '',
+      nationality: '',
+      sex: '',
+      site: '',
+      url: '',
+
+      profile: null,
+
       nav: [
-        {text: 'Profile', to: '/profile/profile'},
-        {text: 'About Me', to: '/profile/aboutMe'},
-        {text: 'Awards and medals', to: '/profile/awardsMedals'},
+        {text: 'User panel', to: '/user-panel'},
+        {text: 'Profile', to: '/user-panel/profile'},
+        {text: 'My Team', to: '/user-panel/my-team'},
+        {text: 'Withdraw', to: '/user-panel/withdraw'},
+        {text: 'Deposit', to: '/user-panel/deposit'},
+        {text: 'Premium Account', to: '/user-panel/premium'},
+        {text: 'Support', to: '/user-panel/support'},
+        {text: 'Game profile', to: '/user-panel/game-profile'},
+        {text: 'Change password', to: '/user-panel/change-password'},
+        {text: 'Change email', to: '/user-panel/change-email'},
+        {text: 'Settings', to: '/user-panel/settings'},
       ],
-      profile: {
-        image: '../assets/img/profile/profile-image.png',
-        firstName: 'Nikodem',
-        lastName: 'Świder',
-        nickname: 'BlacerLordTV ',
-        team: 'Blacer team'
-      }
+    }
+  },
+  async fetch() {
+    const uid = this.$auth.user.localId
+
+    const profile = await this.$api.auth.getProfile(uid)
+
+    this.profile = profile
+
+    for (const key in profile) {
+      this[key] = profile[key]
     }
   },
   computed: {
     fullName() {
       return this.profile.firstName + ' ' + this.profile.lastName
     }
-  }
+  },
+  methods: {
+    logout() {
+      this.$auth.logout('local')
+    }
+  },
 }
 </script>
 
@@ -81,11 +117,16 @@ export default {
   display: flex;
   flex-direction: row;
   flex: 1 0 auto;
+
+  @media screen and (max-width: 576px){
+    display: flex;
+  }
 }
 
 .profile-sidebar {
   padding: 0 15px;
-  flex: 0 0 25%;
+  flex: 0 0 20%;
+  min-width: 212px;
   border-right: 1px solid #1A1F24;
 }
 
@@ -197,5 +238,6 @@ export default {
 
 .tab-content {
   flex: 1 1 auto;
+  margin-left: 60px;
 }
 </style>
