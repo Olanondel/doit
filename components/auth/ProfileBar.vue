@@ -1,15 +1,15 @@
 <template>
-  <div class='profile-side hidden-on-mobile'>
+  <div class='profile-side'>
 
     <div ref='profile-bar' class='profile-bar'>
       <div class='profile-bar__info'>
         <div class='profile-bar__avatar-block'>
-          <img src='@/assets/img/icons/profile/profile-bar/avatar.svg' alt='profile-logo'
+          <img :src='profile.avatar' alt='profile-logo'
                class='profile-bar__avatar-image' />
         </div>
 
         <div class='profile-bar__name-block'>
-          <div class='profile-bar__nickname'>JohnsonBaby2020</div>
+          <div class='profile-bar__nickname'>{{ profile.nickname }}</div>
 
           <div class='profile-bar__rate'>160 EUR / 16 DTC</div>
         </div>
@@ -17,7 +17,7 @@
         <button class='profile-bar__button' @click='openBar'></button>
       </div>
 
-      <div class='profile-bar__toggle-menus'>
+      <div class='profile-bar__toggle-menus' @click='closeMenu'>
         <div class='profile-bar__level'>
           <div class='profile-bar__level-text'> LVL 999</div>
 
@@ -53,30 +53,49 @@ export default {
   name: 'ProfileBar',
   data() {
     return {
+      profile: null,
       nav: [
-        { title: 'My user-panel', url: 'user-panel' },
+        { title: 'My user-panel', url: '/user-panel' },
         { title: 'My team', url: '/user-panel/my-team' },
         { title: 'Withdraw', url: '/user-panel/withdraw' },
         { title: 'Deposit', url: '/user-panel/deposit' },
-        { title: 'Premium', url: '/user-panel/premium' },
+        { title: 'Premium', url: '/user-panel/premium' }
       ],
       helpNav: [
         { title: 'Support', url: '/user-panel/support' },
         { title: 'Settings', url: '/user-panel/settings' },
-        { title: 'Logout', url: '' },
+        { title: 'Logout', url: '' }
       ]
     }
+  },
+  async fetch() {
+    this.profile = await this.$api.auth.getProfile(this.$auth.user.localId)
+  },
+  mounted() {
+    document.addEventListener('click', this.handleClick)
+  },
+  beforeDestroy() {
+    document.removeEventListener('click')
   },
   methods: {
     openBar() {
       this.$refs['profile-bar'].classList.toggle('profile-bar_open')
     },
+    closeMenu() {
+      this.$refs['profile-bar'].classList.remove('profile-bar_open')
+    },
     async logout() {
       await this.$auth.logout()
 
       await this.$router.push('/login')
+    },
+
+    handleClick(event) {
+      if (this.$refs['profile-bar'].contains(event.target)) return
+
+      this.$refs['profile-bar'].classList.remove('profile-bar_open')
     }
-  }
+  },
 }
 </script>
 
@@ -85,6 +104,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 680px) {
+    position: absolute;
+  }
 }
 
 .profile-bar_open {
