@@ -47,11 +47,11 @@ export default {
   data() {
     return {
       nav: [
-        { text: 'Play', to: 'play' },
-        { text: 'News', to: 'news' },
-        { text: 'Games', to: 'games' },
-        { text: 'Shop', to: 'shop' },
-        { text: 'Sponsorship', to: 'sponsorship' }
+        { text: 'Play', to: '/play' },
+        { text: 'News', to: '/news' },
+        { text: 'Games', to: '/games' },
+        { text: 'Shop', to: '/shop' },
+        { text: 'Sponsorship', to: '/sponsorship' }
       ],
       isAuth: false
     }

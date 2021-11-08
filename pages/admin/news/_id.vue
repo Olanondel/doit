@@ -9,7 +9,6 @@
         :options='games'
         title='Game'
         on-admin
-        :reduce='game => game.value'
         label='game'
       />
 
@@ -61,11 +60,11 @@ export default {
 
       isLoading: false,
       games: [
-        { game: 'StarCraft ||', value: 'starcraft2' },
-        { game: 'Dota ||', value: 'dota2' },
-        { game: 'CS:GO', value: 'csgo' },
-        { game: 'LOL', value: 'leagueOfLegends' },
-        { game: 'Fortnite', value: 'fortnite' }
+        { game: 'StarCraft ||', gameId: '2qY3sFllNEDSWPX4EfJD' },
+        { game: 'Dota ||', gameId: 'whngAthyzDDKdCTYQHpP' },
+        { game: 'CS:GO', gameId: '1kTwjy6hhBBciqOhPJMP' },
+        { game: 'LOL', gameId: 'eZ79fJosNM7yjZsDPbvt' },
+        { game: 'Fortnite', gameId: 'jncC7JU6geXRFSXHeQom' }
       ]
     }
   },

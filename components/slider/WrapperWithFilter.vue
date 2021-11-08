@@ -7,12 +7,12 @@
       <div v-if='filter' class='filter-line__categories'>
         <div
           v-for='category in categories'
-          :key='category'
+          :key='category.value'
           class='filter-line__categories-item'
-          :class="{'filter-line__categories-item_active': category === currentCategory}"
-          @click='currentCategory = category'
+          :class="{'filter-line__categories-item_active': category.value === currentCategory}"
+          @click='$emit("changeCategory", category.value)'
         >
-          {{ category }}
+          {{ category.game }}
         </div>
 
       </div>
@@ -27,14 +27,22 @@
 export default {
   name: 'WrapperWithFilter',
   props: {
-    categories: { type: Array, default: () => ([]) },
     filter: { type: Boolean, default: true },
     title: { type: String, default: '' },
-    streams: { type: Boolean, default: false }
+    streams: { type: Boolean, default: false },
+    currentCategory: { type: String, default: 'All' }
   },
   data() {
     return {
-      currentCategory: 'All'
+      current: this.currentCategory,
+      categories: [
+        { game: 'All', value: 'All' },
+        { game: 'StarCraft II', value: '2qY3sFllNEDSWPX4EfJD' },
+        { game: 'Dota II', value: 'whngAthyzDDKdCTYQHpP' },
+        { game: 'CS:GO', value: '1kTwjy6hhBBciqOhPJMP' },
+        { game: 'LOL', value: 'eZ79fJosNM7yjZsDPbvt' },
+        { game: 'Fortnite', value: 'jncC7JU6geXRFSXHeQom' },
+      ]
     }
   }
 }
@@ -67,6 +75,9 @@ export default {
 
     &-item {
       max-height: 56px;
+      max-width: 130px;
+      text-overflow: ellipsis;
+      overflow: hidden;
       height: 100%;
       display: flex;
       justify-content: center;

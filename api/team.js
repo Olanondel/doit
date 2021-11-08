@@ -38,21 +38,21 @@ export default fb => ({
 
   },
 
-  // async getTeams(limit, startAfter, id) {
-  //   let ref = startAfter
-  //     ? await fb.firestore.collection('teams').orderBy('id').startAfter(startAfter).limit(limit)
-  //     : await fb.firestore.collection('teams').orderBy('id').limit(limit)
-  //
-  //   ref = id ? ref.where('leaderId', '==', id) : ref
-  //
-  //   const res = await ref.get()
-  //
-  //   const lastVisible = res.docs[res.docs.length - 1]
-  //
-  //   const data = res.docs.map(el => el.data())
-  //
-  //   return [data, lastVisible]
-  // },
+  async getTeams(limit, startAfter, id) {
+    let ref = startAfter
+      ? await fb.firestore.collection('teams').orderBy('id').startAfter(startAfter).limit(limit)
+      : await fb.firestore.collection('teams').orderBy('id').limit(limit)
+
+    ref = id ? ref.where('leaderId', '==', id) : ref
+
+    const res = await ref.get()
+
+    const lastVisible = res.docs[res.docs.length - 1]
+
+    const data = res.docs.map(el => el.data())
+
+    return [data, lastVisible]
+  },
 
   async removeTeam(id) {
     await fb.firestore.collection('teams').doc(id).delete()
