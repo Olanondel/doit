@@ -85,7 +85,8 @@ export default {
   // nuxt auth
   auth: {
     strategies: {
-      local: {
+      custom: {
+        scheme: '~/schemes/custom',
         token: {
           property: 'idToken',
           type: ''
