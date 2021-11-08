@@ -26,10 +26,10 @@
         <div v-if='$auth.loggedIn' class='nav__item show-on-mobile' @click='logout'>Logout</div>
 
         <div v-else class='login show-on-mobile'>
-          <router-link to='login' class='login__login login__item'>
+          <router-link to='/login' class='login__login login__item'>
             Login
           </router-link>
-          <router-link to='signup/step-1' class='login__signup login__item'>
+          <router-link to='/signup/step-1' class='login__signup login__item'>
             Sign up
           </router-link>
         </div>
@@ -43,7 +43,7 @@
 
 export default {
   name: 'Navigation',
-  components: {  },
+  components: {},
   data() {
     return {
       nav: [

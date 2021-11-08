@@ -4,23 +4,23 @@
 
 
     <transition-group name='slide-fade' class='news'>
-        <div
-          v-for='item in filteredNews'
-          :key='item.id'
-          class='news__news-wrapper'
-        >
-          <div class='news__news'>
-            <div class='news__image-container'>
-              <img src='../assets/img/news/default.jpg' alt='' class='news__image'>
-            </div>
+      <div
+        v-for='item in filteredNews'
+        :key='item.id'
+        class='news__news-wrapper'
+      >
+        <div class='news__news'>
+          <div class='news__image-container'>
+            <img src='../assets/img/news/default.jpg' alt='' class='news__image'>
+          </div>
 
-            <div class='news__content'>
-              <h3 class='news__title'>{{ item.title }}</h3>
+          <div class='news__content'>
+            <h3 class='news__title'>{{ item.title }}</h3>
 
-              <div class='news__description'>{{ item.description }}</div>
-            </div>
+            <div class='news__description'>{{ item.description }}</div>
           </div>
         </div>
+      </div>
     </transition-group>
 
 
@@ -76,11 +76,14 @@ export default {
 .slide-fade-enter-active {
   transition: all .6s ease;
 }
+
 .slide-fade-leave-active {
   transition: all .6s ease;
 }
+
 .slide-fade-enter, .slide-fade-leave-to
-  /* .slide-fade-leave-active до версии 2.1.8 */ {
+  /* .slide-fade-leave-active до версии 2.1.8 */
+{
   opacity: 0;
 }
 

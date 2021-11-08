@@ -1,4 +1,4 @@
-  <template>
+<template>
   <section class='login-container'>
     <div class='login-page'>
 
@@ -76,12 +76,12 @@ export default {
       email,
       required,
       minLength: minLength(3),
-      maxLength: maxLength(18),
+      maxLength: maxLength(18)
     },
     password: {
       required,
       minLength: minLength(4),
-      maxLength: maxLength(16),
+      maxLength: maxLength(16)
     }
   },
   methods: {
@@ -100,7 +100,7 @@ export default {
           this.isLoading = false
         }
       }
-    },
+    }
   }
 }
 </script>

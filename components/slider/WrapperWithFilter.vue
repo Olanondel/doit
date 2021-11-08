@@ -2,7 +2,7 @@
   <div class='flex-slider'>
 
     <div class='flex-slider__filter-line filter-line'>
-      <h2 :class='{ mod: streams }' class='section-title filter-line__title'>{{title}}</h2>
+      <h2 :class='{ mod: streams }' class='section-title filter-line__title'>{{ title }}</h2>
 
       <div v-if='filter' class='filter-line__categories'>
         <div
@@ -41,7 +41,7 @@ export default {
         { game: 'Dota II', value: 'whngAthyzDDKdCTYQHpP' },
         { game: 'CS:GO', value: '1kTwjy6hhBBciqOhPJMP' },
         { game: 'LOL', value: 'eZ79fJosNM7yjZsDPbvt' },
-        { game: 'Fortnite', value: 'jncC7JU6geXRFSXHeQom' },
+        { game: 'Fortnite', value: 'jncC7JU6geXRFSXHeQom' }
       ]
     }
   }

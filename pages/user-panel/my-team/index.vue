@@ -9,7 +9,8 @@
         :key='team.id'
         :to=" 'my-team/' + team.id "
         class='user-panel__link'
-      >{{team.name}}</nuxt-link>
+      >{{ team.name }}
+      </nuxt-link>
 
       <nuxt-link to='my-team/create-team' class='user-panel__link'>Create Team</nuxt-link>
 
@@ -21,7 +22,7 @@
 export default {
   name: 'my-team',
   props: {
-    name: { type: String, default: '' },
+    name: { type: String, default: '' }
   },
   async asyncData({ $api, $fire, $auth }) {
     const profile = await $api.auth.getProfile($auth.user.localId)
@@ -35,13 +36,14 @@ export default {
   data() {
     return {
       links: [
-        { text: 'Create Team', url: 'user-panel/profile', },
+        { text: 'Create Team', url: 'user-panel/profile' }
       ],
       teams: null,
       team: null
     }
   },
-  async mounted() {}
+  async mounted() {
+  }
 }
 </script>
 
