@@ -1,14 +1,30 @@
 <template>
-  <nav class='sidebar'>
+  <nav ref='sidebar' class='sidebar' @click='toggleSidebar'>
     <ul class='nav'>
-      <nuxt-link
-        v-for='item in nav'
-        :key='item.to'
-        no-prefetch
-        tag='li'
-        :to='item.to'
-        :class='item.class'
-      />
+
+      <nuxt-link no-prefetch tag='li' to='/knight' class='nav__item knight'>
+        <span class='nav__item_text'>Games</span>
+      </nuxt-link>
+
+      <nuxt-link no-prefetch tag='li' to='/trophy' class='nav__item trophy'>
+        <span class='nav__item_text'>Leagues</span>
+      </nuxt-link>
+
+      <nuxt-link no-prefetch tag='li' to='/growth' class='nav__item growth'>
+        <span class='nav__item_text'>Top</span>
+      </nuxt-link>
+
+      <nuxt-link no-prefetch tag='li' to='/network' class='nav__item network'>
+        <span class='nav__item_text'>Sponsors</span>
+      </nuxt-link>
+
+      <nuxt-link no-prefetch tag='li' to='/target' class='nav__item target'>
+        <span class='nav__item_text'>Internal links</span>
+      </nuxt-link>
+
+      <nuxt-link no-prefetch tag='li' to='/megaphone' class='nav__item megaphone'>
+        <span class='nav__item_text'>Social media</span>
+      </nuxt-link>
     </ul>
   </nav>
 </template>
@@ -19,14 +35,30 @@ export default {
   data() {
     return {
       nav: [
-        { to: '/knight', class: 'nav__item knight' },
-        { to: '/trophy', class: 'nav__item trophy' },
-        { to: '/growth', class: 'nav__item growth' },
-        { to: '/network', class: 'nav__item network' },
-        { to: '/target', class: 'nav__item target' },
-        { to: '/megaphone', class: 'nav__item megaphone' }
+        { to: '/knight', class: 'nav__item knight', text: 'Games' },
+        { to: '/trophy', class: 'nav__item trophy', text: 'Leagues' },
+        { to: '/growth', class: 'nav__item growth', text: 'Top' },
+        { to: '/network', class: 'nav__item network', text: 'Sposnors' },
+        { to: '/target', class: 'nav__item target', text: 'Internal links' },
+        { to: '/megaphone', class: 'nav__item megaphone', text: 'Social media' }
       ]
     }
+  },
+  methods: {
+    toggleSidebar() {
+      this.$refs.sidebar.classList.toggle('sidebar_open')
+
+      if (this.$refs.sidebar.classList.contains('sidebar_open')) {
+        document.addEventListener('click', this.closeSidebar)
+      }
+    },
+    closeSidebar(event) {
+      if (!this.$refs.sidebar.contains(event.target)) {
+        this.$refs.sidebar.classList.remove('sidebar_open')
+
+        document.removeEventListener('click')
+      }
+    },
   }
 }
 </script>
@@ -43,6 +75,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-right: 1px solid #20252B;
+  transition: all .6s;
 
   @media (max-width: 991px) {
       max-width: 80px;
@@ -90,6 +123,10 @@ export default {
           width: 22px;
           height: 22px;
           margin: 0;
+        }
+
+        &_text {
+          display: none;
         }
       }
 
@@ -142,6 +179,38 @@ export default {
     .nav {
       .nav__item {
 
+      }
+    }
+  }
+}
+
+.sidebar_open {
+  width: 304px;
+  padding-left: 44px;
+  justify-content: flex-start;
+  background: #151C23;
+  box-shadow: 8px 0px 40px 0px #0B0E120D;
+
+  .nav {
+    .nav__item {
+      padding: 3px 0 !important;
+
+      &_active {
+        fill: #F5F5F5;
+
+        .nav__item_text {
+          color: #F5F5F5;
+        }
+      }
+
+      &_text {
+        display: block;
+        padding-left: 48px;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 28px;
+        color: #8BA6CC;
+        white-space: nowrap;
       }
     }
   }
