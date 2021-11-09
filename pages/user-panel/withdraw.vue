@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       input: 0,
-      currentBalance: null,
+      currentBalance: 0,
       isLoading: false
     }
   },
