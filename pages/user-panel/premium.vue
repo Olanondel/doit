@@ -76,6 +76,10 @@ export default {
     flex: 0 0 50%;
     padding: 0 15px;
     margin-bottom: 35px;
+
+    @media screen and (max-width: 960px){
+      flex: 0 0 100%;
+    }
   }
 
   &__category {
@@ -84,6 +88,10 @@ export default {
     align-items: flex-start;
     flex-direction: column;
     padding: 100px 22px 84px;
+
+    @media screen and (max-width: 960px){
+      padding: 60px 22px 44px;
+    }
 
     &_free {
       background: radial-gradient(250.9% 252.09% at -142.43% -152.09%, rgba(20, 114, 255, 0.35) 0%, rgba(20, 114, 255, 0) 95.84%),

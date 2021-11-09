@@ -121,6 +121,10 @@ export default {
   @media screen and (max-width: 576px){
     display: flex;
   }
+
+  @media screen and (max-width: 620px){
+    flex-direction: column;
+  }
 }
 
 .profile-sidebar {
@@ -131,6 +135,10 @@ export default {
 }
 
 .player-card {
+  @media screen and (max-width: 620px){
+    display: none;
+  }
+
   .player-card__img-wrap {
     max-width: 104px;
     max-height: 104px;
@@ -188,6 +196,10 @@ export default {
 }
 
 .tab-nav {
+  @media screen and (max-width: 620px){
+    display: none;
+  }
+
   .tab-nav__list {
 
   }
@@ -239,5 +251,9 @@ export default {
 .tab-content {
   flex: 1 1 auto;
   margin-left: 60px;
+
+  @media screen and (max-width: 620px){
+    margin-left: 0;
+  }
 }
 </style>

@@ -17,7 +17,7 @@
         <button class='profile-bar__button'></button>
       </div>
 
-      <div class='profile-bar__toggle-menus' @click='closeMenu'>
+      <div class='profile-bar__toggle-menus' @click.native='closeMenu'>
         <div class='profile-bar__level'>
           <div class='profile-bar__level-text'> LVL 999</div>
 

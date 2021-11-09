@@ -162,6 +162,10 @@ export default {
   .awards__item {
     max-width: 270px;
     margin-bottom: 26px;
+
+    @media screen and (max-width: 620px){
+      max-width: 100%;
+    }
   }
 
   .awards__text {
