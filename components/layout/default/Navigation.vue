@@ -10,7 +10,7 @@
 
       <div ref='nav__burger-icon' class='nav__burger-icon' @click='toggleMenu'></div>
 
-      <div ref='nav-group' class='nav__group'>
+      <div ref='nav-group' class='nav__group' @click='closeMenu'>
         <ul class='nav__list'>
           <nuxt-link
             v-for='item in nav'
@@ -61,6 +61,11 @@ export default {
       this.$refs['nav__burger-icon'].classList.toggle('nav__burger-icon_open')
       this.$refs['nav-group'].classList.toggle('nav__group_open')
       document.body.style.overflow = (document.body.style.overflow === 'hidden') ? 'visible' : 'hidden'
+    },
+    closeMenu() {
+      this.$refs['nav__burger-icon'].classList.remove('nav__burger-icon_open')
+      this.$refs['nav-group'].classList.remove('nav__group_open')
+      document.body.style.overflow = 'visible'
     },
     async logout() {
       await this.$api.auth.logout()
@@ -154,7 +159,8 @@ export default {
       transition: top .6s;
 
       &_open {
-        top: 80px;
+        top: 0;
+        padding-top: 80px;
         height: 100%;
       }
     }

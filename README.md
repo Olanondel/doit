@@ -1,6 +1,6 @@
 # doit
 
-# deploy: https://quiet-hamlet-66275.herokuapp.com/
+# deploy: https://doit-deqpftw.herokuapp.com/
 
 ## Build Setup
 

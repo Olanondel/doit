@@ -1,7 +1,7 @@
 <template>
   <div class='profile-side'>
 
-    <div ref='profile-bar' class='profile-bar'>
+    <div ref='profile-bar' class='profile-bar' @click='openBar'>
       <div class='profile-bar__info'>
         <div class='profile-bar__avatar-block'>
           <img :src='profile.avatar' alt='profile-logo'
@@ -14,7 +14,7 @@
           <div class='profile-bar__rate'>160 EUR / 16 DTC</div>
         </div>
 
-        <button class='profile-bar__button' @click='openBar'></button>
+        <button class='profile-bar__button'></button>
       </div>
 
       <div class='profile-bar__toggle-menus' @click='closeMenu'>
@@ -125,6 +125,7 @@ export default {
   position: relative;
   max-height: 56px;
   height: 56px;
+  cursor: pointer;
   transition: .2s background linear;
 
   &_open &__button {
