@@ -115,7 +115,7 @@ export default {
   },
 
   router: {
-    middleware: ['admin', 'auth'] // auth: false for specific component, guest for home redirect
+    middleware: ['auth', 'admin'] // auth: false for specific component, guest for home redirect
   },
 
   loading: '~/components/loading.vue',

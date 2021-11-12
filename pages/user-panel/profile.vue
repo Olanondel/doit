@@ -78,16 +78,7 @@ export default {
   data() {
     return {
       profile: null,
-      profileData: [
-        { key: 'ID', value: '7917450' },
-        { key: 'Name', value: 'Nikodem Świder ' },
-        { key: 'Nickname', value: 'BlacerLordTV' },
-        { key: 'With us from', value: '28/08/13' },
-        { key: 'Sex / Age', value: 'Male / 22' },
-        { key: 'Nationality', value: 'Poland' },
-        { key: 'Country', value: 'Poland' },
-        { key: 'Web-site', value: 'http://blacerTV.com' }
-      ],
+
       awards: [
         { title: 'StarCraft ||', count: '15', progress: 80, color: '#55AAFF' },
         { title: 'League of Legends', count: '3', progress: 80, color: '#55FF8F' },

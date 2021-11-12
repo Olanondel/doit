@@ -13,6 +13,14 @@
       <div ref='nav-group' class='nav__group' @click='closeMenu'>
         <ul class='nav__list'>
           <nuxt-link
+            tag='li'
+            no-prefetch
+            class='nav__item nav__item_panel'
+            to='/user-panel'>
+            User panel
+          </nuxt-link>
+
+          <nuxt-link
             v-for='item in nav'
             :key='item.to'
             tag='li'
@@ -23,7 +31,7 @@
           </nuxt-link>
         </ul>
 
-        <div v-if='$auth.loggedIn' class='nav__item show-on-mobile' @click='logout'>Logout</div>
+        <div v-if='$auth.loggedIn' class='nav__item show-on-mobile nav__item_logout' @click='logout'>Logout</div>
 
         <div v-else class='login show-on-mobile'>
           <router-link to='/login' class='login__login login__item'>
@@ -182,7 +190,7 @@ export default {
       flex-direction: column;
       justify-content: normal;
       margin-right: 0;
-      margin-bottom: 84px;
+      margin-bottom: 24px;
     }
   }
 
@@ -205,6 +213,18 @@ export default {
     @media screen and (max-width: 680px) {
       margin-bottom: 30px;
       font-size: 20px;
+    }
+
+    &_panel {
+      display: none;
+
+      @media all and (max-width: 680px) {
+        display: block;
+      }
+    }
+
+    &_logout {
+      text-decoration: underline;
     }
   }
 

@@ -15,51 +15,51 @@
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('xboxOne') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('Xbox One') }">
           <input
             v-model='array'
             type='checkbox'
-            value='xboxOne'
+            value='Xbox One'
             class='status__item-checkbox'> Xbox One
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('ps4') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('ps 4') }">
           <input
             v-model='array'
             type='checkbox'
-            value='ps4'
+            value='ps 4'
             class='status__item-checkbox'> Ps4
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('nintendoSwitch') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('nintendo switch') }">
           <input
             v-model='array'
             type='checkbox'
-            value='nintendoSwitch'
+            value='nintendo switch'
             class='status__item-checkbox'> Nintendo Switch
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('ps5') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('ps 5') }">
           <input
             v-model='array'
             type='checkbox'
-            value='ps5'
-            class='status__item-checkbox'> Ps5
+            value='ps 5'
+            class='status__item-checkbox'> Ps 5
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('xboxSeriesX') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('Xbox series x') }">
           <input
             v-model='array'
             type='checkbox'
-            value='xboxSeriesX'
+            value='Xbox series x'
             class='status__item-checkbox'> Xbox Series X
         </label>
       </div>
@@ -70,7 +70,7 @@
 
 <script>
 export default {
-  name: 'ServerRegionFilter',
+  name: 'PlatformFilter',
   model: {
     prop: 'values',
     event: 'change'
@@ -104,15 +104,19 @@ export default {
   line-height: 32px;
   color: #F5F5F5;
   margin-bottom: 16px;
+
+  @media screen and (max-width: 960px) {
+    margin-bottom: 12px;
+  }
 }
 
 .status {
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
-  gap: 20px;
 
   &__item {
-    margin-bottom: 28px;
+    margin-bottom: 16px;
 
     &-text {
       font-size: 16px;
@@ -136,7 +140,7 @@ export default {
       }
 
       &_active {
-
+        color: #0A68F5;
 
         &::before {
           background: url("@/assets/img/icons/tournaments/checkbox-active.svg") no-repeat center;

@@ -12,7 +12,6 @@ export default fb => ({
 
   async getOwnProfile() {
     const user = fb.auth.currentUser
-    console.log(user)
 
     const data = await fb.firestore.collection('players').doc(user.localId).get()
 
@@ -61,7 +60,6 @@ export default fb => ({
 
   async reauthenticate(password) {
     const user = fb.auth.currentUser
-    console.log(user)
 
     const credential = await firebase.auth.EmailAuthProvider.credential(user.email, password)
 

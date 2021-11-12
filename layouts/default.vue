@@ -8,7 +8,7 @@
         <Navigation />
 
         <AuthButtons v-if='!$auth.loggedIn' />
-        <ProfileBar v-else />
+        <ProfileBar class='hidden-on-mobile' v-else />
       </div>
 
 

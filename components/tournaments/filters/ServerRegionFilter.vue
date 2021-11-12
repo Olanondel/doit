@@ -1,36 +1,66 @@
 <template>
   <div class='status-container'>
 
-    <h2 class='title'>Game mode</h2>
+    <h2 class='title'>Server region</h2>
 
     <div class='status'>
       <div class='status__item'>
-        <label class='status__item-text' :class="{ 'status__item-text_active': one.includes('one') }">
+        <label class='status__item-text' :class="{ 'status__item-text_active': array.includes('europe') }">
           <input
-            v-model='one'
+            v-model='array'
             type='checkbox'
-            value='one'
-            class='status__item-checkbox'> 1v1
+            value='europe'
+            class='status__item-checkbox'> Europe
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': two.includes('two') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('singapore') }">
           <input
-            v-model='two'
+            v-model='array'
             type='checkbox'
-            value='two'
-            class='status__item-checkbox'> 2v2
+            value='singapore'
+            class='status__item-checkbox'> Singapore
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': five.includes('five') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('australia') }">
           <input
-            v-model='five'
+            v-model='array'
             type='checkbox'
-            value='five'
-            class='status__item-checkbox'> 5v5
+            value='australia'
+            class='status__item-checkbox'> Australia
+        </label>
+      </div>
+
+      <div class='status__item'>
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('brazil') }">
+          <input
+            v-model='array'
+            type='checkbox'
+            value='brazil'
+            class='status__item-checkbox'> Brazil
+        </label>
+      </div>
+
+      <div class='status__item'>
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('peru') }">
+          <input
+            v-model='array'
+            type='checkbox'
+            value='peru'
+            class='status__item-checkbox'> Peru
+        </label>
+      </div>
+
+      <div class='status__item'>
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('us east') }">
+          <input
+            v-model='array'
+            type='checkbox'
+            value='us east'
+            class='status__item-checkbox'> US East
         </label>
       </div>
     </div>
@@ -40,7 +70,7 @@
 
 <script>
 export default {
-  name: 'GameModeFilter',
+  name: 'ServerRegionFilter',
   model: {
     prop: 'values',
     event: 'change'
@@ -53,7 +83,7 @@ export default {
     }
   },
   computed: {
-    one: {
+    array: {
       get() {
         return this.values
       },
@@ -62,26 +92,6 @@ export default {
         this.$emit('change', e)
       }
     },
-
-    two: {
-      get() {
-        return this.values
-      },
-
-      set(e) {
-        this.$emit('change', e)
-      }
-    },
-
-    five: {
-      get() {
-        return this.values
-      },
-
-      set(e) {
-        this.$emit('change', e)
-      }
-    }
   }
 }
 </script>
@@ -94,15 +104,19 @@ export default {
   line-height: 32px;
   color: #F5F5F5;
   margin-bottom: 16px;
+
+  @media screen and (max-width: 960px) {
+    margin-bottom: 12px;
+  }
 }
 
 .status {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
 
   &__item {
-    margin-bottom: 28px;
+    margin-bottom: 16px;
 
     &-text {
       font-size: 16px;
@@ -126,7 +140,7 @@ export default {
       }
 
       &_active {
-
+        color: #0A68F5;
 
         &::before {
           background: url("@/assets/img/icons/tournaments/checkbox-active.svg") no-repeat center;
