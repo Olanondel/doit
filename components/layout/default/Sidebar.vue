@@ -14,7 +14,7 @@
         </ul>
       </nuxt-link>
 
-      <nuxt-link ref='leagues' no-prefetch tag='li' to='/trophy' class='nav__item trophy' @click.native.prevent='openSidebar'>
+      <nuxt-link ref='leagues' no-prefetch tag='li' to='/tournaments/' class='nav__item trophy' @click.native.prevent='openSidebar'>
         <span class='nav__item_text'>Leagues</span>
 
 
