@@ -2,7 +2,7 @@
   <div class='flex-slider'>
 
     <div class='flex-slider__filter-line filter-line'>
-      <h2 :class='{ mod: streams }' class='section-title filter-line__title'>{{ title }}</h2>
+      <h2 :class='{ mod: streams, "filter-line__title_streams": streams }' class='section-title filter-line__title'>{{ title }}</h2>
 
       <div v-if='filter' class='filter-line__categories'>
         <div
@@ -61,6 +61,17 @@ export default {
   &__title {
     margin-right: 15px;
     position: relative;
+
+    &_streams:after {
+      content: "";
+      display: inline-block;
+      position: absolute;
+      right: -50px;
+      top: 14px;
+      width: 32px;
+      height: 32px;
+      background: url("@/assets/img/icons/headers/streams.svg") no-repeat center;
+    }
   }
 
   &__categories {
@@ -91,6 +102,7 @@ export default {
       white-space: nowrap;
       flex: 1 0 auto;
       border: 1px solid transparent;
+      color: #A0A5AD;
 
       &_active {
         color: #0F1215;

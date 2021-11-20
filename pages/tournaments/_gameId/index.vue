@@ -2,7 +2,7 @@
   <div class='tournaments'>
 
     <div class='tournaments__headers'>
-      <div class='tournaments__title'>DOTA II: TOURNAMENTS</div>
+      <div class='tournaments__title'>{{game.name}}: TOURNAMENTS</div>
 
       <div
         class='tournaments__game'
@@ -14,11 +14,13 @@
 
       <div class='tournaments__list'>
 
+
         <transition-group name='tournaments'>
           <Tournament
-            v-for='(item, index) in currentChunk'
-            :key='index'
+            v-for='(item) in currentChunk'
+            :key='item.id'
             class='tournaments__item'
+            :tournament-id='item.id'
           />
         </transition-group>
 
@@ -99,28 +101,35 @@
 </template>
 
 <script>
-import Tournament from '../../components/tournaments/Tournament'
-import StatusFilter from '../../components/tournaments/filters/StatusFilter'
-import GameModeFilter from '../../components/tournaments/filters/GameModeFilter'
-import ServerRegionFilter from '../../components/tournaments/filters/ServerRegionFilter'
-import PlatformFilter from '../../components/tournaments/filters/PlatformFilter'
-import Pagination from '../../components/Pagination'
+import Tournament from '../../../components/tournaments/Tournament'
+import StatusFilter from '../../../components/tournaments/filters/StatusFilter'
+import GameModeFilter from '../../../components/tournaments/filters/GameModeFilter'
+import ServerRegionFilter from '../../../components/tournaments/filters/ServerRegionFilter'
+import PlatformFilter from '../../../components/tournaments/filters/PlatformFilter'
+import Pagination from '../../../components/Pagination'
 
 export default {
   name: 'GameTournaments',
   components: { Pagination, PlatformFilter, ServerRegionFilter, GameModeFilter, StatusFilter, Tournament },
+  async asyncData({ $api, params, error }) {
+    const game = await $api.general.getOne('games', params.gameId)
+
+    if (!game) {
+      error({ statusCode: 404 })
+    }
+
+    const tournaments = await $api.tournament.getTournamentsWithId(params.gameId)
+
+    if (tournaments?.length) {
+      return { tournaments, game }
+    }
+
+    return game
+  },
   data() {
     return {
-      tournaments: [
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-        {},
-      ],
+      game: null,
+      tournaments: [],
       currentPagination: 0,
 
       modeFilter: [],

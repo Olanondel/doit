@@ -5,7 +5,7 @@
       :style="{ backgroundImage: 'url(' + require('@/assets/img/common/tournament.jpg') + ')' }"
     >
       <span class='tournament__status tournament__status_ongoing'>Ongoing</span>
-      <div class='tournament__title tournament__title_mobile'>Dota 2 5v5 #2 - Sunday</div>
+      <router-link append :to="tournamentId" tag='div' class='tournament__title tournament__title_mobile'>Dota 2 5v5 #2 - Sunday</router-link>
     </div>
 
     <div
@@ -14,11 +14,11 @@
       @click='toggleAccordion'
     >
       <span class='tournament__status tournament__status_ongoing'>Ongoing</span>
-      <div class='tournament__title tournament__title_mobile'>Dota 2 5v5 #2 - Sunday</div>
+      <router-link append :to="tournamentId" tag='div' class='tournament__title tournament__title_mobile'>Dota 2 5v5 #2 - Sunday</router-link>
     </div>
 
     <div class='tournament__content'>
-      <div class='tournament__title'>Dota 2 5v5 #2 - Sunday</div>
+      <router-link :to="tournamentId" append tag='div' class='tournament__title'>Dota 2 5v5 #2 - Sunday</router-link>
 
       <div class='tournament__info info'>
         <div class='info__item'>
@@ -53,6 +53,10 @@
 <script>
 export default {
   name: 'Tournament',
+  props: {
+    tournamentId: { type: String, default: '' },
+
+  },
   methods: {
     toggleAccordion(e) {
       this.$refs.tournament.classList.toggle('tournament_active')
@@ -61,7 +65,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang='scss' scoped>
 
 .tournament {
   border: 2px solid #20252B;
@@ -162,6 +166,7 @@ export default {
     margin-bottom: 16px;
     position: relative;
     white-space: nowrap;
+    cursor: pointer;
 
     @media screen and (max-width: 480px) {
       font-size: 20px;

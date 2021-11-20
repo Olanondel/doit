@@ -3,13 +3,19 @@
 
     <Greetings />
 
-    <WrapperWithFilter title='Tournaments' :categories='categories'>
-      <Slider :slides='tournaments' />
+    <WrapperWithFilter title='Tournaments' :categories='categories' :current-category='tournamentFilter' @changeCategory='changeTournamentFilter'>
+      <Slider :slides='tournaments' :game-id='tournamentFilter' />
     </WrapperWithFilter>
 
-    <WrapperWithFilter title='News' :categories='categories'>
-      <Slider :slides='news' component='NewsCard' />
+    <WrapperWithFilter title='News' :categories='categories' :current-category='newsFilter' @changeCategory='changeNewsFilter'>
+      <Slider :slides='news' news component='NewsCard' :game-id='newsFilter' />
     </WrapperWithFilter>
+
+    <WrapperWithFilter streams title='Streams' :filter='false' :categories='categories'>
+      <StreamsSlider :slides='streams' />
+    </WrapperWithFilter>
+
+    <Partners />
 
     <WrapperWithFilter title='Games' :filter='false' :categories='categories'>
       <Slider :slides='games' component='GameCard' />
@@ -21,132 +27,57 @@
 import Greetings from '../components/sections/Greetings'
 import WrapperWithFilter from '../components/slider/WrapperWithFilter'
 import Slider from '../components/slider/Slider'
+import Partners from '../components/sections/Partners'
+import StreamsSlider from '../components/slider/StreamsSlider'
 
 export default {
-  components: { Slider, WrapperWithFilter, Greetings },
+  components: { StreamsSlider, Partners, Slider, WrapperWithFilter, Greetings },
+  layout: 'home',
+  async asyncData({ $api }) {
+    const tournaments = await $api.general.get('tournaments')
+
+    return { tournaments }
+  },
   data() {
     return {
       categories: ['All', 'StarCraft II', 'Dota II', 'CS:GO', 'LOL', 'Fortnite'],
-      tournaments: [
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/tournaments/dota1.jpg'),
-          title: 'Tournament’s name will be here, maybe, in two lines',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/tournaments/dota2.jpg'),
-          title: 'Fortnitity evolution X',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'CS:GO',
-          image: require('@/assets/img/home/tournaments/csgo.jpg'),
-          title: 'CS:GO Mirageby tournament',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/tournaments/dota1.jpg'),
-          title: 'Tournament’s name will be here, maybe, in two lines',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/tournaments/dota2.jpg'),
-          title: 'Fortnitity evolution X',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'CS:GO',
-          image: require('@/assets/img/home/tournaments/csgo.jpg'),
-          title: 'CS:GO Mirageby tournament',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/tournaments/dota1.jpg'),
-          title: 'Tournament’s name will be here, maybe, in two lines',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/tournaments/dota2.jpg'),
-          title: 'Fortnitity evolution X',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        },
-        {
-          game: 'CS:GO',
-          image: require('@/assets/img/home/tournaments/csgo.jpg'),
-          title: 'CS:GO Mirageby tournament',
-          info: { start: '07/06', mode: '5v5', slots: '16/30', pool: '$ 1500' }
-        }
+      tournaments: [],
+      news: [],
+      streams: [
+        { image: require('@/assets/img/home/streams/bg1.jpg') },
+        { image: require('@/assets/img/home/streams/bg2.jpg') },
+        { image: require('@/assets/img/home/streams/bg3.jpg') },
+        { image: require('@/assets/img/home/streams/bg4.jpg') },
+        { image: require('@/assets/img/home/streams/bg5.jpg') },
+        { image: require('@/assets/img/home/streams/bg6.jpg') },
+        { image: require('@/assets/img/home/streams/bg1.jpg') },
+        { image: require('@/assets/img/home/streams/bg2.jpg') },
+        { image: require('@/assets/img/home/streams/bg3.jpg') },
+        { image: require('@/assets/img/home/streams/bg4.jpg') },
+        { image: require('@/assets/img/home/streams/bg5.jpg') },
+        { image: require('@/assets/img/home/streams/bg6.jpg') },
+        { image: require('@/assets/img/home/streams/bg1.jpg') },
+        { image: require('@/assets/img/home/streams/bg2.jpg') },
+        { image: require('@/assets/img/home/streams/bg3.jpg') },
       ],
-      news: [
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/news/news1.jpg'),
-          title: 'Tournament’s name will be here, maybe, in two lines',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/news/news2.jpg'),
-          title: 'Fortnitity evolution X',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'CS:GO',
-          image: require('@/assets/img/home/news/news3.jpg'),
-          title: 'CS:GO Mirageby tournament',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/news/news1.jpg'),
-          title: 'Tournament’s name will be here, maybe, in two lines',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/news/news2.jpg'),
-          title: 'Fortnitity evolution X',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'CS:GO',
-          image: require('@/assets/img/home/news/news3.jpg'),
-          title: 'CS:GO Mirageby tournament',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/news/news1.jpg'),
-          title: 'Tournament’s name will be here, maybe, in two lines',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'Dota II',
-          image: require('@/assets/img/home/news/news2.jpg'),
-          title: 'Fortnitity evolution X',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        },
-        {
-          game: 'CS:GO',
-          image: require('@/assets/img/home/news/news3.jpg'),
-          title: 'CS:GO Mirageby tournament',
-          text: 'Team Evolve, a collective of players who create and share impressive maps using Fortnite\'s in-game Creative mode...'
-        }
-      ],
-      games: [
-        { image: require('@/assets/img/home/games/dota1.jpg'), text: 'Dota ||' },
-        { image: require('@/assets/img/home/games/csgo.jpg'), text: 'CS:GO' },
-        { image: require('@/assets/img/home/games/starcraft.jpg'), text: 'StarCraft ||' },
-      ]
+      games: [],
+
+      tournamentFilter: 'All',
+      newsFilter: 'All',
     }
   },
-  methods: {}
+  async mounted() {
+    this.news = await this.$api.general.get('news')
+    this.games = await this.$api.general.get('games')
+  },
+  methods: {
+    changeTournamentFilter(filter) {
+      this.tournamentFilter = filter
+    },
+    changeNewsFilter(filter) {
+      this.newsFilter = filter
+    },
+  }
 }
 </script>
 <style lang='scss' scoped>

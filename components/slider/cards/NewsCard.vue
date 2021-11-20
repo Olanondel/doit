@@ -1,7 +1,7 @@
 <template>
   <div class='card'>
     <div class='card__image-wrapper'>
-      <img class='card__image' :src='data.image' alt='tournaments-image'>
+      <img class='card__image' :src='data.mainImage || defaultImage' alt='tournaments-image'>
     </div>
 
     <div class='card__title'>
@@ -9,7 +9,7 @@
     </div>
 
     <div class='card__text'>
-      {{ data.text }}
+      {{ data.description }}
     </div>
   </div>
 </template>
@@ -21,6 +21,11 @@ export default {
     data: { type: Object, default: () => ({
         image: '', title: '', text: ''
       }) }
+  },
+  computed: {
+    defaultImage() {
+      return require('@/assets/img/news/default.jpg')
+    }
   }
 }
 </script>
@@ -100,6 +105,8 @@ export default {
     color: #5E656B;
     padding: 0 22px;
     margin-bottom: 42px;
+    max-height: 100px;
+    overflow: hidden;
   }
 }
 </style>

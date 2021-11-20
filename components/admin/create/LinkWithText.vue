@@ -2,7 +2,7 @@
   <div class='choose'>
     <div class='choose__text'>{{text}}</div>
 
-    <div class='choose__item'>{{buttonText}}</div>
+    <div class='choose__item' @click='$emit("clickBtn")'>{{buttonText}}</div>
   </div>
 </template>
 

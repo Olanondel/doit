@@ -4,6 +4,8 @@ import Auth from '@/api/auth';
 import Team from '@/api/team';
 import General from '@/api/general';
 import News from '@/api/news';
+import Tournament from '@/api/tournament';
+import League from '@/api/league';
 
 export default (context, inject) => {
   // Initialize API factories
@@ -14,6 +16,8 @@ export default (context, inject) => {
     team: Team(context.$fire),
     general: General(context.$fire),
     news: News(context.$fire),
+    tournament: Tournament(context.$fire),
+    league: League(context.$fire),
   };
 
   // Inject $api

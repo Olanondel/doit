@@ -1,11 +1,11 @@
 <template>
   <div class='tournaments'>
     <ul class='games tournaments__games'>
-      <nuxt-link to='/tournaments/whngAthyzDDKdCTYQHpP' tag='li' class='games__item starcraft'>Starcraft ||</nuxt-link>
+      <nuxt-link to='/tournaments/2qY3sFllNEDSWPX4EfJD' tag='li' class='games__item starcraft'>Starcraft ||</nuxt-link>
       <nuxt-link to='/tournaments/whngAthyzDDKdCTYQHpP' tag='li' class='games__item dota'>Dota ||</nuxt-link>
-      <nuxt-link to='/tournaments/whngAthyzDDKdCTYQHpP' tag='li' class='games__item csgo'>CS:GO</nuxt-link>
-      <nuxt-link to='/tournaments/whngAthyzDDKdCTYQHpP' tag='li' class='games__item lol'>League of Legends</nuxt-link>
-      <nuxt-link to='/tournaments/whngAthyzDDKdCTYQHpP' tag='li' class='games__item fortnite'>Fortnite</nuxt-link>
+      <nuxt-link to='/tournaments/1kTwjy6hhBBciqOhPJMP' tag='li' class='games__item csgo'>CS:GO</nuxt-link>
+      <nuxt-link to='/tournaments/eZ79fJosNM7yjZsDPbvt' tag='li' class='games__item lol'>League of Legends</nuxt-link>
+      <nuxt-link to='/tournaments/jncC7JU6geXRFSXHeQom' tag='li' class='games__item fortnite'>Fortnite</nuxt-link>
     </ul>
   </div>
 </template>

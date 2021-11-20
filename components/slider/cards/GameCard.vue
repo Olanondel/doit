@@ -1,10 +1,10 @@
 <template>
   <div
     class='card'
-    :style="{ backgroundImage: 'url(' + data.image + ')' }"
+    :style="{ backgroundImage: 'url(' + (data.capsules[0].image || defaultImage) + ')' }"
   >
     <div class='card__text'>
-      {{data.text}}
+      {{data.name}}
     </div>
   </div>
 </template>
@@ -19,6 +19,11 @@ export default {
         image: '',
         text: '',
       })
+    }
+  },
+  computed: {
+    defaultImage() {
+      return require('@/assets/img/home/games/dota1.jpg')
     }
   }
 }
