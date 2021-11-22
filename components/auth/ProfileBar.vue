@@ -1,10 +1,10 @@
 <template>
   <div class='profile-side'>
 
-    <div ref='profile-bar' class='profile-bar' @click='openBar'>
+    <div ref='profile-bar' class='profile-bar' @click='toggleBar'>
       <div class='profile-bar__info'>
         <div class='profile-bar__avatar-block'>
-          <img :src='profile.avatar' alt='profile-logo'
+          <img :src='profile.avatar || require("@/assets/img/icons/profile/default.svg")' alt='profile-logo'
                class='profile-bar__avatar-image' />
         </div>
 
@@ -17,7 +17,7 @@
         <button class='profile-bar__button'></button>
       </div>
 
-      <div class='profile-bar__toggle-menus' @click.native='closeMenu'>
+      <div class='profile-bar__toggle-menus'>
         <div class='profile-bar__level'>
           <div class='profile-bar__level-text'> LVL 999</div>
 
@@ -28,6 +28,7 @@
 
         <div class='profile-bar__menus'>
           <div class='profile-bar__main-nav'>
+            <nuxt-link v-if='$auth.user.localId === "fWupd31qDVeIWDoEyYtQpWJhuRq2"' to='/admin'>Admin panel</nuxt-link>
             <nuxt-link
               v-for='link in nav'
               :key='link.title'
@@ -51,9 +52,15 @@
 <script>
 export default {
   name: 'ProfileBar',
+  async asyncData({ $api, $auth }) {
+    return {
+      profile: await $api.auth.getProfile($auth.user.localId),
+      bar: null
+    }
+  },
   data() {
     return {
-      profile: null,
+      profile: [],
       nav: [
         { title: 'My user-panel', url: '/user-panel' },
         { title: 'My team', url: '/user-panel/my-team' },
@@ -68,21 +75,22 @@ export default {
       ]
     }
   },
-  async fetch() {
-    this.profile = await this.$api.auth.getProfile(this.$auth.user.localId)
-  },
   mounted() {
+    this.bar = document.getElementsByClassName('profile-bar')[0]
     document.addEventListener('click', this.handleClick)
   },
   beforeDestroy() {
-    document.removeEventListener('click')
+    document.removeEventListener('click', this.handleClick)
   },
   methods: {
+    toggleBar() {
+      this.bar.classList.toggle('profile-bar_open')
+    },
     openBar() {
-      this.$refs['profile-bar'].classList.toggle('profile-bar_open')
+      this.bar.classList.add('profile-bar_open')
     },
     closeMenu() {
-      this.$refs['profile-bar'].classList.remove('profile-bar_open')
+      this.bar.classList.remove('profile-bar_open')
     },
     async logout() {
       await this.$auth.logout()
@@ -91,11 +99,12 @@ export default {
     },
 
     handleClick(event) {
-      if (this.$refs['profile-bar'].contains(event.target)) return
+      if (this.bar.contains(event.target)) return
 
-      this.$refs['profile-bar'].classList.remove('profile-bar_open')
+      this.bar.classList.remove('profile-bar_open')
     }
   },
+
 }
 </script>
 

@@ -57,6 +57,8 @@ export default {
       mainImageFileName: '',
       mainImageWasChanged: false,
       initialMainImage: '',
+      author: '',
+      created: this.getDate(),
 
       isLoading: false,
       games: [
@@ -69,6 +71,14 @@ export default {
     }
   },
   methods: {
+    getDate() {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+
+      return dd + '/' + mm + '/' + yyyy;
+    },
     getImage([img, name]) {
       this.mainImage = img
       this.mainImageFileName = name
@@ -95,7 +105,8 @@ export default {
           game: this.game,
           mainImageFileName: this.mainImageFileName,
           mainImageWasChanged: false,
-          initialMainImage: this.mainImageFileName
+          initialMainImage: this.mainImageFileName,
+          created: this.created
         })
 
         this.isLoading = false

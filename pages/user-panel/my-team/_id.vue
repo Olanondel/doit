@@ -10,7 +10,6 @@
         <BaseSelect
           v-model='game'
           :options='games'
-          :reduce='game => game.value'
           label='name'
           title='Main Game'
           on-admin
@@ -81,6 +80,7 @@ export default {
       logo: '',
       logoFileName: '',
       logoInitialFileName: '',
+      created: this.getDate(),
 
       logoFile: null,
       games: null,
@@ -116,6 +116,7 @@ export default {
           logo: this.logo,
           logoFileName: this.logoFileName,
           logoInitialFileName: this.logoInitialFileName,
+          created: this.created
         })
 
         await this.$api.auth.addOwnTeam(this.$auth.user.localId, id)
@@ -130,6 +131,14 @@ export default {
       }
 
       // end
+    },
+    getDate() {
+      const today = new Date();
+      const dd = String(today.getDate()).padStart(2, '0');
+      const mm = String(today.getMonth() + 1).padStart(2, '0');
+      const yyyy = today.getFullYear();
+
+      return dd + '/' + mm + '/' + yyyy;
     },
     async saveTeam() {
       try {

@@ -70,6 +70,7 @@ export default {
         services: {
           auth: {
             initialize: {
+              onAuthStateChangedAction: 'getCurrentUser',
             },
             ssr: true
           },
