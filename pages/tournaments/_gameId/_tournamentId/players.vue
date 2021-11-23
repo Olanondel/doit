@@ -53,7 +53,22 @@ export default {
     defaultAvatar() {
       return require('@/assets/img/icons/tournaments/players/avatar.jpg')
     }
-  }
+  },
+  methods: {
+    async getPlayersUpdate() {
+      const tournament = await this.$api.general.getOne('tournaments', this.$route.params.tournamentId)
+
+      const teams = await Promise.all(tournament.teams.map(
+        async el => await this.$api.general.getOne('teams', el)
+      ))
+
+      const playersId = (teams.map(el => el.players)).flat()
+
+      this.players = await Promise.all(playersId.map(
+        async el => await this.$api.general.getOne('players', el)
+      ))
+    }
+  },
 }
 </script>
 

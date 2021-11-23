@@ -33,6 +33,7 @@
 
           <div class='tournament__tabs-content'>
             <nuxt-child
+              ref='child'
               :tournament='$data'
               :players='playersFullInfo'
               :rules='basicInfo.quickRules'
@@ -43,47 +44,60 @@
       </div>
 
       <div class='tournament__sidebar'>
-        <div class='tournament__sidebar-header'>Requirements</div>
+        <div class='tournament__sidebar-content-wrapper'>
+          <div class='tournament__sidebar-header'>Requirements</div>
 
-        <div class='tournament__sidebar-content'>
-          <div class='tournament__sidebar-item'>
-            <div class='tournament__sidebar-item-key'>Minimum age</div>
-            <div class='tournament__sidebar-item-value'>At least {{ addRequirements.minAge }} years old</div>
-          </div>
+          <div class='tournament__sidebar-content'>
+            <div class='tournament__sidebar-item'>
+              <div class='tournament__sidebar-item-key'>Minimum age</div>
+              <div class='tournament__sidebar-item-value'>At least {{ addRequirements.minAge }} years old</div>
+            </div>
 
-          <div class='tournament__sidebar-item'>
-            <div class='tournament__sidebar-item-key'>Residence</div>
-            <div class='tournament__sidebar-item-value'>More info</div>
-          </div>
+            <div class='tournament__sidebar-item'>
+              <div class='tournament__sidebar-item-key'>Residence</div>
+              <div class='tournament__sidebar-item-value'>More info</div>
+            </div>
 
-          <div class='tournament__sidebar-item'>
-            <div class='tournament__sidebar-item-key'>PSN account</div>
-            <div class='tournament__sidebar-item-value'>Register your name ID</div>
-          </div>
+            <div class='tournament__sidebar-item'>
+              <div class='tournament__sidebar-item-key'>PSN account</div>
+              <div class='tournament__sidebar-item-value'>Register your name ID</div>
+            </div>
 
-          <div class='tournament__sidebar-item'>
-            <div class='tournament__sidebar-item-key'>Play</div>
-            <div class='tournament__sidebar-item-value'>Please log in to take part
-              in this tournament.
+            <div class='tournament__sidebar-item'>
+              <div class='tournament__sidebar-item-key'>Play</div>
+              <div class='tournament__sidebar-item-value'>Please log in to take part
+                in this tournament.
+              </div>
             </div>
           </div>
+
+          <div class='tournament__sidebar-signup'>
+            <div class='tournament__sidebar-signup-tip'>Sign up closes in 43 minutes</div>
+            <div v-if='joined' class='tournament__sidebar-signup-button tournament__sidebar-signup-button_joined' @click='openModal'>Joined</div>
+            <div v-else class='tournament__sidebar-signup-button' @click='openModal'>Get in -></div>
+          </div>
+
+          <div class='tournament__sidebar-social'>
+            <a href='' target='_blank'
+               class='tournament__sidebar-social-item tournament__sidebar-social-item_facebook'></a>
+            <a href='' target='_blank'
+               class='tournament__sidebar-social-item tournament__sidebar-social-item_twitter'></a>
+            <a href='' target='_blank'
+               class='tournament__sidebar-social-item tournament__sidebar-social-item_instagram'></a>
+            <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_p'></a>
+            <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_cat'></a>
+          </div>
         </div>
 
-        <div class='tournament__sidebar-signup'>
-          <div class='tournament__sidebar-signup-tip'>Sign up closes in 43 minutes</div>
-          <div v-if='joined' class='tournament__sidebar-signup-button tournament__sidebar-signup-button_joined' @click='openModal'>Joined</div>
-          <div v-else class='tournament__sidebar-signup-button' @click='openModal'>'Get in ->'</div>
-        </div>
-
-        <div class='tournament__sidebar-social'>
-          <a href='' target='_blank'
-             class='tournament__sidebar-social-item tournament__sidebar-social-item_facebook'></a>
-          <a href='' target='_blank'
-             class='tournament__sidebar-social-item tournament__sidebar-social-item_twitter'></a>
-          <a href='' target='_blank'
-             class='tournament__sidebar-social-item tournament__sidebar-social-item_instagram'></a>
-          <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_p'></a>
-          <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_cat'></a>
+        <div class='tournament__sidebar-donations donations'>
+          <div class='donations__title'>Donations</div>
+          <div class='donations__content'>
+            <div class='donations__block'>
+              <div class='donations__block-title'>Prize Pool</div>
+              <div class='donations__block-price'>$ 0.00</div>
+              <div class='donations__block-button'>Contribute</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -159,6 +173,7 @@ export default {
         })
         const tournament = await this.$api.general.getOne('tournaments', this.$route.params.tournamentId)
         this.teams = tournament.teams
+        await this.$refs.child.getPlayersUpdate()
 
         this.$nuxt.$loading.finish()
       } else {
@@ -171,6 +186,7 @@ export default {
         teams: firebase.firestore.FieldValue.arrayRemove(id)
       })
       const tournament = await this.$api.general.getOne('tournaments', this.$route.params.tournamentId)
+      await this.$refs.child.getPlayersUpdate()
       this.teams = tournament.teams
       this.$nuxt.$loading.finish()
     }
@@ -296,7 +312,11 @@ export default {
 
   &__sidebar {
     flex: 0 0 300px;
-    border: 2px solid #20252B;
+
+    &-content-wrapper {
+      border: 2px solid #20252B;
+      margin-bottom: 30px;
+    }
 
     &-header {
       border-bottom: 2px solid #20252B;
@@ -359,7 +379,6 @@ export default {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 2px solid #20252B;
 
 
       &-item {
@@ -387,6 +406,56 @@ export default {
         &_cat {
           background: transparent url("@/assets/img/icons/tournaments/social/cat.svg") no-repeat center;
         }
+      }
+    }
+  }
+
+  .donations {
+    border: 2px solid #20252B;
+
+    &__title {
+      padding: 30px;
+      border-bottom: 2px solid #20252B;
+      color: #F5F5F5;
+      font-size: 24px;
+      line-height: 24px;
+      font-weight: 500;
+    }
+    &__content {
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    &__block {
+      padding: 14px 30px;
+      flex: 0 0 202px;
+      border-radius: 4px;
+      background-color: #9fa4c4;
+      background-image: linear-gradient(315deg, #9fa4c4 0%, #9e768f 74%);
+
+
+      &-title {
+        margin-bottom: 24px;
+        color: #fff;
+      }
+
+      &-price {
+        margin-bottom: 15px;
+        font-weight: 500;
+        color: #f5f5f5;
+        font-size: 24px;
+        line-height: 24px;
+      }
+
+      &-button {
+        background: dodgerblue;
+        border-radius: 2px;
+        font-weight: 500;
+        color: #f5f5f5;
+        max-width: max-content;
+        padding: 10px;
       }
     }
   }
