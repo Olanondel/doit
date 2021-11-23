@@ -734,7 +734,8 @@ export default {
           voting: this.voting,
           rules: this.rules,
           ongoing: true,
-          ownLeagues: this.ownLeagues
+          ownLeagues: this.ownLeagues,
+          teams: []
         }
 
         this.id ? await this.$api.tournament.saveTournament(data) : await this.$api.tournament.setTournament(data, id)

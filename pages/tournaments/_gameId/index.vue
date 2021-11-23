@@ -2,7 +2,7 @@
   <div class='tournaments'>
 
     <div class='tournaments__headers'>
-      <div class='tournaments__title'>{{game.name}}: TOURNAMENTS</div>
+      <div class='tournaments__title'>{{ game.name }}: TOURNAMENTS</div>
 
       <div
         class='tournaments__game'
@@ -12,7 +12,7 @@
 
     <div class='tournaments__content'>
 
-      <div class='tournaments__list'>
+      <div v-if='tournaments.length' class='tournaments__list'>
 
 
         <transition-group name='tournaments'>
@@ -21,6 +21,7 @@
             :key='item.id'
             class='tournaments__item'
             :tournament-id='item.id'
+            :data='item'
           />
         </transition-group>
 
@@ -33,7 +34,11 @@
 
       </div>
 
-      <div  ref='filters' class='filters'>
+      <div v-else class='tournaments__list'>
+        <h2>Список турниров пуст!</h2>
+      </div>
+
+      <div ref='filters' class='filters'>
         <div class='filters__header'>
           <h2 class='filters__title'>Filters</h2>
           <div class='filters__clear' @click='clearFilters'>Clear</div>
@@ -47,7 +52,7 @@
               :key='item'
               class='filters__filter-item-mobile'
             >
-              {{item}}
+              {{ item }}
               <div class='filters__filter-item-remove-mobile'></div>
             </div>
 
@@ -56,7 +61,7 @@
               :key='item'
               class='filters__filter-item-mobile'
             >
-              {{item}}
+              {{ item }}
               <div class='filters__filter-item-remove-mobile'></div>
             </div>
 
@@ -65,7 +70,7 @@
               :key='item'
               class='filters__filter-item-mobile'
             >
-              {{item}}
+              {{ item }}
               <div class='filters__filter-item-remove-mobile'></div>
             </div>
 
@@ -74,7 +79,7 @@
               :key='item'
               class='filters__filter-item-mobile'
             >
-              {{item}}
+              {{ item }}
               <div class='filters__filter-item-remove-mobile'></div>
             </div>
 
@@ -124,11 +129,11 @@ export default {
       return { tournaments, game }
     }
 
-    return game
+    return { game }
   },
   data() {
     return {
-      game: null,
+      game: { name: 'Game' },
       tournaments: [],
       currentPagination: 0,
 
@@ -149,7 +154,28 @@ export default {
       const start = this.currentPagination * 10
       const end = start + 10
 
-      return this.tournaments.slice(start, end)
+      return this.filteredTournaments.slice(start, end)
+    },
+    filteredTournaments() {
+      let copy = [...this.tournaments]
+
+      if (this.modeFilter.length) {
+        copy = copy.filter(el => this.modeFilter.includes(el.game.mode.toLowerCase()))
+      }
+
+      if (this.statusFilter.length) {
+        copy = copy.filter(el => (el.ongoing && this.statusFilter.includes('upcoming')) || (!el.ongoing && this.statusFilter.includes('past')))
+      }
+
+      if (this.platformFilter.length) {
+        copy = copy.filter(el => this.platformFilter.some(platform => el.extra.platform[platform]))
+      }
+
+      if (this.serverRegionFilter.length) {
+        copy = copy.filter(el => this.serverRegionFilter.some(server => el.extra.serverRegion[server]))
+      }
+
+      return copy
     }
   },
   methods: {
@@ -166,7 +192,7 @@ export default {
     changeCurrentPagination(current) {
       this.currentPagination = current
     }
-  },
+  }
 }
 </script>
 
@@ -175,7 +201,9 @@ export default {
 .tournaments-enter-active, .tournaments-leave-active {
   transition: all .6s;
 }
-.tournaments-enter, .tournaments-leave-to /* .list-leave-active до версии 2.1.8 */ {
+
+.tournaments-enter, .tournaments-leave-to /* .list-leave-active до версии 2.1.8 */
+{
   opacity: 0;
 }
 
@@ -234,6 +262,7 @@ export default {
     }
 
   }
+
   &__filters {
 
     @media screen and (max-width: 960px) {
@@ -243,7 +272,7 @@ export default {
   }
 
   &__item {
-      margin-bottom: 16px;
+    margin-bottom: 16px;
   }
 
   &__image {
@@ -286,12 +315,14 @@ export default {
       display: none;
     }
   }
+
   &__title {
     font-weight: 500;
     font-size: 32px;
     line-height: 32px;
     color: #F5F5F5;
   }
+
   &__clear {
     font-size: 16px;
     line-height: 24px;
@@ -307,6 +338,7 @@ export default {
       display: block;
     }
   }
+
   &__title-mobile {
     font-weight: 500;
     font-size: 20px;
@@ -331,12 +363,14 @@ export default {
       background: transparent url("@/assets/img/icons/tournaments/arrow-to-top.svg") no-repeat center;
     }
   }
+
   &__current-filters-mobile {
     display: flex;
     gap: 8px;
     align-items: center;
     flex-wrap: wrap;
   }
+
   &__filter-item-mobile {
     padding: 17px 38px 17px 18px;
     background: #141A24;
@@ -346,6 +380,7 @@ export default {
     position: relative;
     text-transform: uppercase;
   }
+
   &__filter-item-remove-mobile {
     position: absolute;
     width: 8px;
@@ -355,6 +390,7 @@ export default {
     right: 16px;
     background: transparent url("@/assets/img/icons/tournaments/x.svg") no-repeat center;
   }
+
   &__clear-mobile {
     color: #B83333;
     text-transform: uppercase;

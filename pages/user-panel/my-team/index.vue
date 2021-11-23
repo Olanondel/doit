@@ -5,11 +5,11 @@
     <div class='user-panel__links'>
 
       <nuxt-link
-        v-for='team in teams'
-        :key='team.id'
-        :to=" 'my-team/' + team.id "
+        v-for='item in teams'
+        :key='item.id'
+        :to=" 'my-team/' + item.id "
         class='user-panel__link'
-      >{{ team.name }}
+      >{{ item.name }}
       </nuxt-link>
 
       <nuxt-link to='my-team/create-team' class='user-panel__link'>Create Team</nuxt-link>
@@ -38,7 +38,7 @@ export default {
       links: [
         { text: 'Create Team', url: 'user-panel/profile' }
       ],
-      teams: null,
+      teams: [],
       team: null
     }
   },

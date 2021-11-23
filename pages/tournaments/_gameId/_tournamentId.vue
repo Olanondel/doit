@@ -1,7 +1,7 @@
 <template>
   <div class='tournament'>
     <div class='tournament__headers'>
-      <div class='tournament__back'>Back</div>
+      <div class='tournament__back' @click='$router.push("/tournaments/" + $route.params.gameId)'>Back</div>
 
       <div
         class='tournament__game-image'
@@ -13,11 +13,12 @@
       <div class='tournament__main'>
 
         <div class='tournament__header'>
-          <div class='tournament__image' :style="{ backgroundImage: 'url(' + require('@/assets/img/common/tournament-title.png') + ')' }" />
+          <div class='tournament__image'
+               :style="{ backgroundImage: 'url(' + require('@/assets/img/common/tournament-title.png') + ')' }" />
 
           <div class='tournament__header-content'>
-            <div class='tournament__title'>{{basicInfo.title}}</div>
-            <div class='tournament__player-count'>{{players.length}} players signed up</div>
+            <div class='tournament__title'>{{ basicInfo.title }}</div>
+            <div class='tournament__player-count'>{{ players.length }} players signed up</div>
           </div>
         </div>
 
@@ -47,7 +48,7 @@
         <div class='tournament__sidebar-content'>
           <div class='tournament__sidebar-item'>
             <div class='tournament__sidebar-item-key'>Minimum age</div>
-            <div class='tournament__sidebar-item-value'>At least {{addRequirements.minAge}} years old</div>
+            <div class='tournament__sidebar-item-value'>At least {{ addRequirements.minAge }} years old</div>
           </div>
 
           <div class='tournament__sidebar-item'>
@@ -63,21 +64,42 @@
           <div class='tournament__sidebar-item'>
             <div class='tournament__sidebar-item-key'>Play</div>
             <div class='tournament__sidebar-item-value'>Please log in to take part
-              in this tournament.</div>
+              in this tournament.
+            </div>
           </div>
         </div>
 
         <div class='tournament__sidebar-signup'>
           <div class='tournament__sidebar-signup-tip'>Sign up closes in 43 minutes</div>
-          <div class='tournament__sidebar-signup-button'>Log in / Register</div>
+          <div class='tournament__sidebar-signup-button' @click='openModal'>
+            {{ joined ? 'Joined' : 'Get in ->' }}
+          </div>
         </div>
 
         <div class='tournament__sidebar-social'>
-          <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_facebook'></a>
-          <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_twitter'></a>
-          <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_instagram'></a>
+          <a href='' target='_blank'
+             class='tournament__sidebar-social-item tournament__sidebar-social-item_facebook'></a>
+          <a href='' target='_blank'
+             class='tournament__sidebar-social-item tournament__sidebar-social-item_twitter'></a>
+          <a href='' target='_blank'
+             class='tournament__sidebar-social-item tournament__sidebar-social-item_instagram'></a>
           <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_p'></a>
           <a href='' target='_blank' class='tournament__sidebar-social-item tournament__sidebar-social-item_cat'></a>
+        </div>
+      </div>
+    </div>
+
+    <div ref='modal' class='modal'>
+      <div class='modal__content'>
+        <div class='modal__title'>Select team</div>
+        <div
+          v-for='item in ownTeams'
+          :key='item.id'
+          class='modal__item'
+        >
+          <div class='modal__item-title'>{{ item.name }}</div>
+          <div v-if='!teams.includes(item.id)' class='modal__item-button' @click='joinWithTeam(item.id)'>Join With</div>
+          <div v-else class='modal__item-button' @click='cancelRegistration(item.id)'>Cancel</div>
         </div>
       </div>
     </div>
@@ -85,20 +107,75 @@
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
   name: '_tournamentId',
   async asyncData({ $api, params }) {
-    return { ...await $api.general.getOne('tournaments', params.tournamentId),  }
+    return { ...await $api.general.getOne('tournaments', params.tournamentId) }
   },
   data() {
     return {
-      playersFullInfo: []
+      playersFullInfo: [],
+      ownTeams: [],
+      profile: null
+    }
+  },
+  computed: {
+    joined() {
+      return this.ownTeams.some(el => this.teams.includes(el.id))
     }
   },
   async mounted() {
-    this.playersFullInfo = await Promise.all(this.players.map(async player => {
-      return await this.$api.player.getUser(player.id)
-    }))
+    if (this.players?.length) {
+      this.playersFullInfo = await Promise.all(this.players.map(async player => {
+        return await this.$api.player.getUser(player.id)
+      }))
+    }
+
+    await this.getOwnTeams()
+  },
+  methods: {
+    openModal() {
+      this.$refs.modal.classList.add('modal_active')
+
+      this.$refs.modal.addEventListener('click', this.checkClickToCloseModal)
+    },
+    async getOwnTeams() {
+      this.profile = await this.$api.auth.getProfile(this.$auth.user.localId)
+
+      this.ownTeams = await Promise.all(this.profile.myTeams.map(async el => await this.$api.general.getOne('teams', el)))
+    },
+    checkClickToCloseModal(e) {
+      if (e.target.classList.contains('modal')) {
+        this.$refs.modal.classList.remove('modal_active')
+
+        this.$refs.modal.removeEventListener('click', this.checkClickToCloseModal)
+      }
+    },
+    async joinWithTeam(id) {
+      if (!this.joined) {
+        this.$nuxt.$loading.start()
+        await this.$api.general.update('tournaments', this.$route.params.tournamentId, {
+          teams: firebase.firestore.FieldValue.arrayUnion(id)
+        })
+        const tournament = await this.$api.general.getOne('tournaments', this.$route.params.tournamentId)
+        this.teams = tournament.teams
+
+        this.$nuxt.$loading.finish()
+      } else {
+        alert('Only one team can be joined')
+      }
+    },
+    async cancelRegistration(id) {
+      this.$nuxt.$loading.start()
+      await this.$api.general.update('tournaments', this.$route.params.tournamentId, {
+        teams: firebase.firestore.FieldValue.arrayRemove(id)
+      })
+      const tournament = await this.$api.general.getOne('tournaments', this.$route.params.tournamentId)
+      this.teams = tournament.teams
+      this.$nuxt.$loading.finish()
+    }
   }
 
 }
@@ -127,6 +204,7 @@ export default {
     justify-content: space-between;
     margin-bottom: 10px;
   }
+
   &__back {
     margin-top: 16px;
     position: relative;
@@ -147,6 +225,7 @@ export default {
       background: transparent url("@/assets/img/icons/tournaments/arrow-to-left.svg") no-repeat center;
     }
   }
+
   &__game-image {
     width: 253px;
     height: 45px;
@@ -157,29 +236,35 @@ export default {
     justify-content: space-between;
     gap: 30px;
   }
+
   &__main {
     flex: 1 1 auto;
   }
+
   &__header {
     margin-bottom: 30px;
     display: flex;
     padding: 42px 44px;
     border: 2px solid #20252B;
   }
+
   &__image {
     flex: 0 0 62px;
     height: 62px;
     margin-right: 15px;
   }
+
   &__header-content {
     flex: 1 1 auto;
   }
+
   &__title {
     font-weight: 500;
     font-size: 32px;
     line-height: 48px;
     color: #F5F5F5;
   }
+
   &__player-count {
     font-size: 16px;
     line-height: 24px;
@@ -189,9 +274,11 @@ export default {
   &__tabs {
 
   }
+
   &__tabs-row {
     display: flex;
   }
+
   &__tab {
     color: #67707A;
     text-align: center;
@@ -200,6 +287,7 @@ export default {
     padding: 10px 40px;
     cursor: pointer;
   }
+
   &__tabs-content {
     border: 2px solid #20252B;
     padding: 40px;
@@ -220,10 +308,12 @@ export default {
       line-height: 24px;
       color: #F5F5F5;
     }
+
     &-content {
       padding: 30px;
       border-bottom: 2px solid #20252B;
     }
+
     &-item {
       margin-bottom: 24px;
 
@@ -234,10 +324,12 @@ export default {
         color: #F5F5F5;
         margin-bottom: 12px;
       }
+
       &-value {
         color: #67707A;
       }
     }
+
     &-signup {
       padding: 30px;
       border-bottom: 2px solid #20252B;
@@ -248,6 +340,7 @@ export default {
         line-height: 24px;
         margin-bottom: 16px;
       }
+
       &-button {
         width: 100%;
         padding: 16px 50px;
@@ -258,6 +351,7 @@ export default {
         border-radius: 2px;
       }
     }
+
     &-social {
       padding: 18px 62px;
       display: flex;
@@ -294,6 +388,58 @@ export default {
       }
     }
   }
+
+  .modal {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    position: fixed;
+    display: none;
+    z-index: 19;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: 0;
+
+    &_active {
+      display: flex;
+    }
+
+    &__content {
+      max-width: 300px;
+      background: #0F1215;
+      padding: 24px 27px;
+      width: 100%;
+      height: 400px;
+      overflow: auto;
+      border-radius: 4px;
+    }
+
+    &__title {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 24px;
+      color: #F5F5F5;
+      margin-bottom: 24px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #F5F5F5;
+    }
+
+    &__item {
+      display: flex;
+      justify-content: space-between;
+
+      &-title {
+        color: slategray;
+      }
+
+      &-button {
+        color: green;
+        cursor: pointer;
+      }
+    }
+  }
 }
+
 
 </style>

@@ -7,7 +7,7 @@
         <div class='categories__category categories__category_free'>
           <h3 class='categories__title'>Free</h3>
 
-          <div class='categories__price'>$10 per mounth</div>
+          <div class='categories__price'>$ 0 per mounth</div>
 
           <p class='categories__content'>
             A night to remember for Brazil. Drama is never too far away at Copa America and this final had it by the
@@ -15,8 +15,6 @@
             A night to remember for Brazil. Drama is never too far away at Copa America and this final had it by the
             bucketlad. Thanks for your company.
           </p>
-
-          <nuxt-link to class='categories__link'>Get</nuxt-link>
         </div>
       </div>
 
@@ -33,7 +31,7 @@
             bucketlad. Thanks for your company.
           </p>
 
-          <nuxt-link to class='categories__link'>Get</nuxt-link>
+          <div v-if='profile.status !== "pro"' to class='categories__link' @click='getPremium("pro")'>Get</div>
         </div>
       </div>
 
@@ -48,7 +46,7 @@
             A night to remember for Brazil. Drama is never too far away at Copa America and this final had it by the bucketlad. Thanks for your company.
           </p>
 
-          <nuxt-link to class='categories__link'>Get</nuxt-link>
+          <div v-if='profile.status !== "organizer"' to class='categories__link'  @click='getPremium("organizer")'>Get</div>
         </div>
       </div>
     </div>
@@ -61,6 +59,56 @@ export default {
   name: 'premium',
   components: {
 
+  },
+  props: {
+  },
+  async asyncData({ $api, $auth }) {
+    return { profile: await $api.auth.getProfile($auth.user.localId)}
+  },
+  data() {
+    return {
+      profile: null
+    }
+  },
+  methods: {
+    async getPremium(premium) {
+      const balance = this.profile.balance || 0
+
+      if (premium === 'pro') {
+        const price = 5 * 27
+
+        if (balance > price) {
+          this.$nuxt.$loading.start()
+          await this.$api.auth.updateProfile(this.$auth.user.localId, {
+            balance: balance - price,
+            status: 'pro'
+          })
+          this.profile.balance = balance - price
+          this.profile.status = 'pro'
+          this.$nuxt.$loading.finish()
+        } else {
+          alert('Не достаточно средств на балансе!')
+        }
+
+      }
+
+      if (premium === 'organizer') {
+        const price = 15 * 27
+
+        if (balance > price) {
+          this.$nuxt.$loading.start()
+          await this.$api.auth.updateProfile(this.$auth.user.localId, {
+            balance: balance - price,
+            status: 'organizer'
+          })
+          this.profile.balance = balance - price
+          this.profile.status = 'organizer'
+          this.$nuxt.$loading.finish()
+        } else {
+          alert('Не достаточно средств на балансе!')
+        }
+      }
+    }
   }
 }
 </script>
@@ -169,6 +217,7 @@ export default {
     padding: 14px 38px;
     color: #F5F5F5;
     font-weight: 700;
+    cursor: pointer;
     background: linear-gradient(180deg, #2788F6 0%, #0960E0 100%), #095FE0;
   }
 }

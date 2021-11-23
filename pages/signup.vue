@@ -93,7 +93,7 @@ export default {
           avatar: ''
         })
 
-        await this.$auth.loginWith('local', { data: { email: this.email, password: this.password } })
+        await this.$auth.loginWith('custom', { data: { email: this.email, password: this.password } })
         await this.$router.push('/')
         this.isLoading = false
       } catch (err) {

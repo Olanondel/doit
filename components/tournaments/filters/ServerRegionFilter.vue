@@ -5,62 +5,62 @@
 
     <div class='status'>
       <div class='status__item'>
-        <label class='status__item-text' :class="{ 'status__item-text_active': array.includes('europe') }">
+        <label class='status__item-text' :class="{ 'status__item-text_active': array.includes('EU&NE') }">
           <input
             v-model='array'
             type='checkbox'
-            value='europe'
-            class='status__item-checkbox'> Europe
+            value='EU&NE'
+            class='status__item-checkbox'> EU&NE
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('singapore') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('EU&W') }">
           <input
             v-model='array'
             type='checkbox'
-            value='singapore'
-            class='status__item-checkbox'> Singapore
+            value='EU&W'
+            class='status__item-checkbox'> EU&W
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('australia') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('AU&OC') }">
           <input
             v-model='array'
             type='checkbox'
-            value='australia'
-            class='status__item-checkbox'> Australia
+            value='AU&OC'
+            class='status__item-checkbox'> AU&OC
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('brazil') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('CHINA') }">
           <input
             v-model='array'
             type='checkbox'
-            value='brazil'
-            class='status__item-checkbox'> Brazil
+            value='CHINA'
+            class='status__item-checkbox'> CHINA
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('peru') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('ASIA') }">
           <input
             v-model='array'
             type='checkbox'
-            value='peru'
-            class='status__item-checkbox'> Peru
+            value='ASIA'
+            class='status__item-checkbox'> ASIA
         </label>
       </div>
 
       <div class='status__item'>
-        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('us east') }">
+        <label class='status__item-text'  :class="{ 'status__item-text_active': array.includes('AMERICA') }">
           <input
             v-model='array'
             type='checkbox'
-            value='us east'
-            class='status__item-checkbox'> US East
+            value='AMERICA'
+            class='status__item-checkbox'> AMERICA
         </label>
       </div>
     </div>

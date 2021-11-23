@@ -5,74 +5,74 @@
       <nuxt-link no-prefetch tag='li' to='/knight' class='nav__item knight' @click.native.prevent='openSidebar'>
         <span class='nav__item_text'>Games</span>
 
-        <ul class='nav__inner-menu'>
-          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>
-        </ul>
+<!--        <ul class='nav__inner-menu'>-->
+<!--          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>-->
+<!--        </ul>-->
       </nuxt-link>
 
       <nuxt-link ref='leagues' no-prefetch tag='li' to='/tournaments/' class='nav__item trophy' @click.native.prevent='openSidebar'>
         <span class='nav__item_text'>Leagues</span>
 
 
-          <ul class='nav__inner-menu'>
-            <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>
-            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>
-            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>
-            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>
-            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>
-          </ul>
+<!--          <ul class='nav__inner-menu'>-->
+<!--            <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>-->
+<!--            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>-->
+<!--            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>-->
+<!--            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>-->
+<!--            <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>-->
+<!--          </ul>-->
       </nuxt-link>
 
       <nuxt-link no-prefetch tag='li' to='/growth' class='nav__item growth' @click.native.prevent='openSidebar'>
         <span class='nav__item_text'>Top</span>
 
-        <ul class='nav__inner-menu'>
-          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>
-        </ul>
+<!--        <ul class='nav__inner-menu'>-->
+<!--          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>-->
+<!--        </ul>-->
       </nuxt-link>
 
-      <nuxt-link no-prefetch tag='li' to='/network' class='nav__item network' @click.native.prevent='openSidebar'>
-        <span class='nav__item_text'>Sponsors</span>
+      <nuxt-link no-prefetch tag='li' to='/teams' class='nav__item network' @click.native.prevent='openSidebar'>
+        <span class='nav__item_text'>Teams</span>
 
         <ul class='nav__inner-menu'>
-          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>
+<!--          <nuxt-link to='/join-to-team' tag='li' class='nav__inner-menu-item'>Join to Team -></nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>-->
         </ul>
       </nuxt-link>
 
       <nuxt-link no-prefetch tag='li' to='/target' class='nav__item target' @click.native.prevent='openSidebar'>
         <span class='nav__item_text'>Internal links</span>
 
-        <ul class='nav__inner-menu'>
-          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>
-        </ul>
+<!--        <ul class='nav__inner-menu'>-->
+<!--          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>-->
+<!--        </ul>-->
       </nuxt-link>
 
       <nuxt-link no-prefetch tag='li' to='/megaphone' class='nav__item megaphone' @click.native.prevent='openSidebar'>
         <span class='nav__item_text'>Social media</span>
 
-        <ul class='nav__inner-menu'>
-          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>
-          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>
-        </ul>
+<!--        <ul class='nav__inner-menu'>-->
+<!--          <nuxt-link to='' tag='li' class='nav__inner-menu-item'>The main league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Second</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Third value league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fourth league</nuxt-link>-->
+<!--          <nuxt-link to='' tag='li'  class='nav__inner-menu-item'>Fiveth lague</nuxt-link>-->
+<!--        </ul>-->
       </nuxt-link>
     </ul>
   </nav>

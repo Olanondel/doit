@@ -2,48 +2,56 @@
   <div ref='tournament' class='tournament'>
     <div
       class='tournament__image'
-      :style="{ backgroundImage: 'url(' + require('@/assets/img/common/tournament.jpg') + ')' }"
+      :style="{ backgroundImage: 'url(' + (data.game.mainBanner || defaultBanner) + ')' }"
     >
-      <span class='tournament__status tournament__status_ongoing'>Ongoing</span>
-      <router-link append :to="tournamentId" tag='div' class='tournament__title tournament__title_mobile'>Dota 2 5v5 #2 - Sunday</router-link>
+      <span
+        class='tournament__status'
+        :class="{ 'tournament__status_ongoing': data.ongoing, 'tournament__status_finished': !data.ongoing }"
+      >{{ data.ongoing ? 'Ongoing' : 'Finished' }}</span>
+      <router-link append :to='tournamentId + "/info"' tag='div' class='tournament__title tournament__title_mobile'>
+        {{ data.basicInfo.title }}
+      </router-link>
     </div>
 
     <div
       class='tournament__image tournament__image_mobile'
-      :style="{ backgroundImage: 'url(' + require('@/assets/img/common/tournament.jpg') + ')' }"
+      :style="{ backgroundImage: 'url(' + (data.game.mainBanner || defaultBanner) + ')' }"
       @click='toggleAccordion'
     >
       <span class='tournament__status tournament__status_ongoing'>Ongoing</span>
-      <router-link append :to="tournamentId" tag='div' class='tournament__title tournament__title_mobile'>Dota 2 5v5 #2 - Sunday</router-link>
+      <router-link append :to='tournamentId + "/info"' tag='div' class='tournament__title tournament__title_mobile'>
+        {{ data.basicInfo.title }}
+      </router-link>
     </div>
 
     <div class='tournament__content'>
-      <router-link :to="tournamentId" append tag='div' class='tournament__title'>Dota 2 5v5 #2 - Sunday</router-link>
+      <router-link :to='tournamentId  + "/info"' append tag='div' class='tournament__title'>{{ data.basicInfo.title }}
+      </router-link>
 
       <div class='tournament__info info'>
         <div class='info__item'>
           <div class='info__key'>Prize</div>
-          <div class='info__value'>$10</div>
+          <div class='info__value'>$ {{data.prizePool.pool || 0}}</div>
         </div>
 
         <div class='info__item'>
           <div class='info__key'>Entry free</div>
-          <div class='info__value'>Free to enter</div>
+          <div class='info__value'>{{data.registration.type}}</div>
         </div>
 
         <div class='info__item'>
           <div class='info__key'>platform</div>
-          <div class='info__value'>PS4</div>
+          <div class='info__value'>{{platform}}</div>
         </div>
 
         <div class='info__item'>
           <div class='info__key'>Slots</div>
-          <div class='info__value'>2 / 8</div>
+          <div class='info__value'>{{data.players.length}}</div>
         </div>
 
         <div class='info__item'>
           <div class='info__key'>Mode</div>
-          <div class='info__value'>Capitains mode</div>
+          <div class='info__value'>{{data.game.mode || 'default'}}</div>
         </div>
       </div>
     </div>
@@ -55,7 +63,24 @@ export default {
   name: 'Tournament',
   props: {
     tournamentId: { type: String, default: '' },
+    data: { type: Object, default: () => ({}) }
 
+  },
+  computed: {
+    defaultBanner() {
+      return require('@/assets/img/common/tournament.jpg')
+    },
+    platform() {
+      if (this.data?.extra.platform) {
+        for (const key in this.data.extra.platform) {
+          if (this.data.extra.platform) {
+            return key
+          }
+        }
+      }
+
+      return 'default'
+    }
   },
   methods: {
     toggleAccordion(e) {
@@ -157,6 +182,7 @@ export default {
       padding: 0;
     }
   }
+
   &__title {
     font-weight: 500;
     font-size: 24px;
@@ -223,6 +249,7 @@ export default {
     display: flex;
     flex-direction: column;
   }
+
   &__key {
     font-size: 16px;
     line-height: 24px;
@@ -233,6 +260,7 @@ export default {
       font-size: 10px;
     }
   }
+
   &__value {
     color: #F5F5F5;
     font-size: 16px;

@@ -116,7 +116,8 @@ export default {
           logo: this.logo,
           logoFileName: this.logoFileName,
           logoInitialFileName: this.logoInitialFileName,
-          created: this.created
+          created: this.created,
+          players: [this.leaderId]
         })
 
         await this.$api.auth.addOwnTeam(this.$auth.user.localId, id)

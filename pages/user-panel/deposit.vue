@@ -16,6 +16,9 @@ import AdminButton from '../../components/creational/AdminButton'
 export default {
   name: 'deposit',
   components: { AdminButton, BaseInput },
+  props: {
+
+  },
   async asyncData({ $api, $auth }) {
     const profile = await $api.auth.getProfile($auth.user.localId)
 

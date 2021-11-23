@@ -46,7 +46,9 @@
     </div>
 
     <div class='tab-content'>
-      <nuxt-child/>
+      <nuxt-child
+        :profile='profile'
+      />
     </div>
   </section>
 </template>
