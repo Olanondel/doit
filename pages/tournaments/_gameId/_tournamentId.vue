@@ -71,9 +71,8 @@
 
         <div class='tournament__sidebar-signup'>
           <div class='tournament__sidebar-signup-tip'>Sign up closes in 43 minutes</div>
-          <div class='tournament__sidebar-signup-button' @click='openModal'>
-            {{ joined ? 'Joined' : 'Get in ->' }}
-          </div>
+          <div v-if='joined' class='tournament__sidebar-signup-button tournament__sidebar-signup-button_joined' @click='openModal'>Joined</div>
+          <div v-else class='tournament__sidebar-signup-button' @click='openModal'>'Get in ->'</div>
         </div>
 
         <div class='tournament__sidebar-social'>
@@ -110,7 +109,6 @@
 import firebase from 'firebase'
 
 export default {
-  name: '_tournamentId',
   async asyncData({ $api, params }) {
     return { ...await $api.general.getOne('tournaments', params.tournamentId) }
   },
@@ -349,6 +347,10 @@ export default {
         background: linear-gradient(180deg, #2788F6 0%, #0960E0 100%);
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         border-radius: 2px;
+
+        &_joined {
+          background:linear-gradient(-120deg, #D62121, #C72C2C, #3a1111);
+        }
       }
     }
 

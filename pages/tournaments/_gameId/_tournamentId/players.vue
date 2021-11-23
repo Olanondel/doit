@@ -26,14 +26,28 @@
 
 <script>
 export default {
-  name: 'players',
   props: {
     tournament: { type: Object, default: () => ({  }) },
-    players: { type: Array, default: () => ([]) },
   },
-  async asyncData({ $api }) {},
+  async asyncData({ $api, params }) {
+    const tournament = await $api.general.getOne('tournaments', params.tournamentId)
+
+    const teams = await Promise.all(tournament.teams.map(
+      async el => await $api.general.getOne('teams', el)
+    ))
+
+    const playersId = (teams.map(el => el.players)).flat()
+
+    const players = await Promise.all(playersId.map(
+      async el => await $api.general.getOne('players', el)
+    ))
+
+    return { players }
+  },
   data() {
-    return {}
+    return {
+      players: []
+    }
   },
   computed: {
     defaultAvatar() {
